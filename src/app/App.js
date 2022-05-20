@@ -1,8 +1,20 @@
+import Layout from "./layouts";
+import AnimeList from "./pages/Anime";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+
 function App() {
   return (
-    <div>
-      <h1>React App</h1>
-    </div>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path='/' element={<AnimeList />} />
+        </Routes>
+      </Layout>
+    </Router>
   );
 }
 
