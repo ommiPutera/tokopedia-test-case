@@ -10,8 +10,9 @@ export const queryAnimeList = `
       }
       media(id: $id) {
         id
-        bannerImage
-        episodes
+        coverImage {
+          extraLarge
+        }
         title {
           english
         }
@@ -25,8 +26,12 @@ export const queryAnimeDetail = `
     Media (id: $id) {
       id
       bannerImage
+      coverImage {
+        extraLarge
+      }
       episodes
       genres
+      seasonYear
       description
       title {
         english

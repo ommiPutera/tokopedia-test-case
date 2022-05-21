@@ -48,12 +48,12 @@ const Card = styled.div`
 
   @media (max-width: 768px) {
     & div {
-      height: 100px;
+      height: 240px;
       width: 100%;
     }
 
     & p {
-      margin-top: 8px;
+      margin-top: 12px;
       height: 20px;
       width: 100%;
     }

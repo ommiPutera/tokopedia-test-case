@@ -1,54 +1,34 @@
 import React from "react";
-import { queryAnimeList } from "../graphQL/Queries";
-import { animeApi } from "../services/animeApi";
-import { handleResponse } from "../utils/handleResponse";
 
 export const AnimeContext = React.createContext();
 
-// function animeReducer(state, action) {
-//   switch (action.type) {
-//     case 'LOAD': {
-//       return { count: state.count + 1 }
-//     }
-//     default: {
-//       throw new Error(`Unhandled action type: ${action.type}`)
-//     }
-//   }
-// }
+function animeReducer(state, action) {
+  switch (action.type) {
+    case 'load': {
+      return {
+        ...state,
+        itemsList: action.itemsList,
+        itemsDetail: action.itemsDetail,
+        page: localStorage.getItem('page')
+      }
+    }
+    default: {
+      throw new Error(`Unhandled action type: ${action.type}`)
+    }
+  }
+}
 
 const AnimeProvider = (props) => {
-  const [loading, setLoading] = React.useState(false);
-  const [items, setItems] = React.useState(null);
-  const [page, setPage] = React.useState(1);
-
-  const load = React.useCallback(() => {
-    async function fetchData() {
-      setLoading(true)
-      animeApi
-        .get(queryAnimeList, {
-          page,
-          perPage: 10
-        })
-        .then(handleResponse)
-        .then((items) => {
-          setItems(items.data.Page)
-          setLoading(false)
-        }).catch((err) => {
-          alert('Error, check console');
-          console.error(err);
-        })
-    }
-    fetchData()
-  }, [page])
-
-  React.useEffect(() => {
-    load()
-  }, [load])
+  const [data, dispatch] = React.useReducer(animeReducer, {
+    items: null,
+    page: 1,
+  })
 
   const value = {
-    items,
-    loading,
-    setPage
+    list: data.itemsList,
+    detail: data.itemsDetail,
+    page: data.page,
+    dispatch
   }
 
   return (

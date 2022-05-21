@@ -6,24 +6,51 @@ import Show from '../../components/Pagination/show';
 import LoadingCard from '../../components/skeleton/LoadingCard';
 import { Link } from "react-router-dom";
 import { useAnime } from '../../../contexts/AnimeContext';
+import { queryAnimeList } from '../../../graphQL/Queries';
+import { animeApi } from '../../../services/animeApi';
+import { handleResponse } from '../../../utils/handleResponse';
 
 function List() {
   const {
-    items,
-    loading,
-    setPage
+    list,
+    page,
+    dispatch
   } = useAnime();
 
-  console.log(items)
+  const load = React.useCallback(() => {
+    function fetchData() {
+      animeApi
+        .get(queryAnimeList, {
+          page: page,
+          perPage: 10
+        })
+        .then(handleResponse)
+        .then(res => dispatch({
+          type: 'load',
+          itemsList: res.data.Page,
+          page: page
+        }))
+        .catch((err) => {
+          alert('Error, check console');
+          console.error(err);
+        })
+    }
+    fetchData()
+  }, [dispatch, page])
+
+  React.useEffect(() => {
+    load()
+    window.scrollTo(0, 0)
+  }, [load])
 
   return (
     <Container>
       <h1>Serial Anime</h1>
       <Wrapper>
         {
-          !loading
+          list
             ?
-            items?.media.map((item, index) => (
+            list.media.map((item, index) => (
               <Link to={`/detail/${item.id}`} key={item.id} className="link">
                 <Card item={item} />
               </Link>
@@ -32,15 +59,18 @@ function List() {
         }
       </Wrapper>
       <Show
-        total={items?.pageInfo.total || 0}
-        currentPage={items?.pageInfo.currentPage || 0}
-        show={items?.pageInfo.perPage || 0}
+        total={list?.pageInfo.total || 0}
+        currentPage={list?.pageInfo.currentPage || 0}
+        show={list?.pageInfo.perPage || 0}
       />
       <Pagination
-        total={items?.pageInfo.total || 0}
-        currentPage={items?.pageInfo.currentPage || 0}
-        limit={items?.pageInfo.perPage || 0}
-        onChangePage={page => setPage(page)}
+        total={list?.pageInfo.total || 0}
+        currentPage={list?.pageInfo.currentPage || 0}
+        limit={list?.pageInfo.perPage || 0}
+        onChangePage={page => {
+          dispatch({ type: 'load', page: page })
+          localStorage.setItem('page', page);
+        }}
       />
     </Container>
   )

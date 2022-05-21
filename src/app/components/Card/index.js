@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 
-function Card({ item: { title, bannerImage, episodes } }) {
+function Card({ item: { title, coverImage, episodes } }) {
   return (
     <Container>
-      <img src={bannerImage || '/assets/no_image_available.png'} alt='' />
+      <img src={coverImage?.extraLarge || '/assets/no_image_available.png'} alt='' />
       <AnimeTitle>
-        <p>{`${title.english || 'Title not found...'} - Episodes ${episodes || 'Not found..'}`}</p>
+        <p>{`${title.english || 'Title not found...'}`}</p>
       </AnimeTitle>
     </Container>
   )
@@ -26,7 +26,7 @@ const AnimeTitle = styled.div`
   @media (max-width: 768px) {
     & p {
       margin: 5px 0;
-      font-size: 11px;
+      font-size: 14px;
     }
   }
 `
@@ -42,7 +42,7 @@ const Container = styled.div`
   }
   @media (max-width: 768px) {
     img {
-      height: 100px;
+      height: 250px;
     }
   }
 `
