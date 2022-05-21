@@ -3,7 +3,6 @@ import {
   ChevronDoubleLeftIcon, ChevronDoubleRightIcon,
   ChevronLeftIcon, ChevronRightIcon
 } from '@heroicons/react/solid';
-import { hover } from '@testing-library/user-event/dist/hover';
 import React from 'react';
 
 const paginate = (
@@ -12,10 +11,8 @@ const paginate = (
   pageSize,
   maxPages
 ) => {
-  // calculate total pages
   let totalPages = Math.ceil(totalItems / pageSize);
 
-  // ensure current page isn't out of range
   if (currentPage < 1) {
     currentPage = 1;
   } else if (currentPage > totalPages) {
@@ -24,36 +21,23 @@ const paginate = (
 
   let startPage, endPage;
   if (totalPages <= maxPages) {
-    // total pages less than max so show all pages
     startPage = 1;
     endPage = totalPages;
   } else {
-    // total pages more than max so calculate start and end pages
     let maxPagesBeforeCurrentPage = Math.floor(maxPages / 2);
     let maxPagesAfterCurrentPage = Math.ceil(maxPages / 2) - 1;
     if (currentPage <= maxPagesBeforeCurrentPage) {
-      // current page near the start
       startPage = 1;
       endPage = maxPages;
     } else if (currentPage + maxPagesAfterCurrentPage >= totalPages) {
-      // current page near the end
       startPage = totalPages - maxPages + 1;
       endPage = totalPages;
     } else {
-      // current page somewhere in the middle
       startPage = currentPage - maxPagesBeforeCurrentPage;
       endPage = currentPage + maxPagesAfterCurrentPage;
     }
   }
-
-  // calculate start and end item indexes
-  // let startIndex = (currentPage - 1) * pageSize;
-  // let endIndex = Math.min(startIndex + pageSize - 1, totalItems - 1);
-
-  // create an array of pages to ng-repeat in the pager control
   let pages = Array.from(Array((endPage + 1) - startPage).keys()).map(i => startPage + i);
-
-  // return object with all pager properties required by the view
   return pages;
 }
 
@@ -83,7 +67,7 @@ function Index({ total, currentPage, limit, onChangePage }) {
         {
           pages.map((page, key) =>
             <PaginationItem
-              key={key}
+              key={page}
               active={currentPage === page}
               onClick={() => viewPage(page)}
               label={page}
@@ -108,8 +92,14 @@ function Index({ total, currentPage, limit, onChangePage }) {
 
 const PaginationItem = ({ disabled, active, onClick, label }) => {
   return (
-    <ContainerLi ed>
-      <Button active={active} disabled={disabled} onClick={onClick}>{label}</Button>
+    <ContainerLi>
+      <Button
+        active={active}
+        disabled={disabled}
+        onClick={onClick}
+      >
+        {label}
+      </Button>
     </ContainerLi>
   )
 }
@@ -123,10 +113,6 @@ const ContainerUl = styled.div`
 
 const ContainerLi = styled.div`
   margin: 0 6px;
-
-  &:hover {
-    opacity: 0.6
-  }
 `
 
 const Button = styled.button(props => ({

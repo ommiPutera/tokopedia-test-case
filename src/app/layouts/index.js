@@ -17,13 +17,13 @@ function Index({ children }) {
 }
 
 const Container = styled.div`
-  width: 1200px;
+  width: 1300px;
   max-width: 100%;
   margin: 0 auto;
 `
 
 const Content = styled.div`
-  padding: 5px 0 25px 0;
+  padding: 5px 0 15px 0;
   height: 100%;
   min-height: 100vh;
 `

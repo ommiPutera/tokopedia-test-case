@@ -5,7 +5,7 @@ function Card({ item: { title, bannerImage, episodes } }) {
     <Container>
       <img src={bannerImage || '/assets/no_image_available.png'} alt='' />
       <AnimeTitle>
-        <p>{`${title.english || 'Error: Tittle not found...'} - Episodes ${episodes}`}</p>
+        <p>{`${title.english || 'Title not found...'} - Episodes ${episodes || 'Not found..'}`}</p>
       </AnimeTitle>
     </Container>
   )
@@ -17,18 +17,26 @@ const AnimeTitle = styled.div`
   width: auto;
   & p {
     text-align: center;
-    margin: 5px 0;
+    margin: 3px 0;
     color: white;
-    font-size: 11px;
+    font-size: 14px;
     font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    & p {
+      margin: 5px 0;
+      font-size: 11px;
+    }
   }
 `
 
 const Container = styled.div`
   position: relative;
   overflow: hidden;
+  cursor: pointer;
   img {
-    height: 300px;
+    height: 140px;
     width: 100%;
     object-fit: cover;
   }

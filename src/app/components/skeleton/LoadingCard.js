@@ -8,8 +8,8 @@ const LoadingCard = ({ count }) => {
   return (
     <>
       {
-        loop.map(val => (
-          <Card>
+        loop.map((val, index) => (
+          <Card key={val}>
             <div />
             <p></p>
           </Card>
@@ -36,13 +36,13 @@ const Card = styled.div`
   }
 
   & div {
-    height: 300px;
+    height: 130px;
     width: 100%;
   }
 
   & p {
-    margin-top: 5px;
-    height: 10px;
+    margin-top: 10px;
+    height: 20px;
     width: 100%;
   }
 

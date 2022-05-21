@@ -1,7 +1,7 @@
 const url = "https://graphql.anilist.co"
 
 export const animeApi = {
-  list: (query, variables) => {
+  get: (query, variables) => {
     return fetch(url, {
       method: 'POST',
       headers: {
