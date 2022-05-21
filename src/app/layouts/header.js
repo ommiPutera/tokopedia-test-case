@@ -3,7 +3,9 @@ import styled from '@emotion/styled'
 function Header() {
   return (
     <Container>
-      Header
+      <div>
+        <p>Header</p>
+      </div>
     </Container>
   )
 }
@@ -11,13 +13,14 @@ function Header() {
 const Container = styled.div`
   width: 100vw;
   max-width: 100%;
-  background-color: #fff;
-  position: fixed;
+  background-color: #000000;
+  position: sticky;
   top: 0px;
-  right: 0px;
-  left: 0px;
-  padding: 15px 30px;
-  box-shadow: rgb(0 0 0 / 7%) 0px 4px 6px -1px;
+  z-index: 100;
+
+  div {
+    padding: 20px;
+  }
 `
 
 export default Header

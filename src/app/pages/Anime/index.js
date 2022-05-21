@@ -1,9 +1,15 @@
 import React from 'react'
+import List from './List';
 
 function Index() {
+
   return (
-    <div>Anime Index</div>
+    <div>
+      <List />
+    </div>
   )
 }
+
+
 
 export default Index

@@ -1,5 +1,6 @@
 import Layout from "./layouts";
 import AnimeList from "./pages/Anime";
+import AnimeContextProvider from "../contexts/AnimeContext";
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,9 +11,11 @@ function App() {
   return (
     <Router>
       <Layout>
-        <Routes>
-          <Route path='/' element={<AnimeList />} />
-        </Routes>
+        <AnimeContextProvider>
+          <Routes>
+            <Route path='/' element={<AnimeList />} />
+          </Routes>
+        </AnimeContextProvider>
       </Layout>
     </Router>
   );

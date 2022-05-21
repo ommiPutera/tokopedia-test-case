@@ -23,8 +23,9 @@ const Container = styled.div`
 `
 
 const Content = styled.div`
-  margin: 50px 0 0 0;
-  height: 100vh;
+  padding: 5px 0 25px 0;
+  height: 100%;
+  min-height: 100vh;
 `
 
 export default Index
