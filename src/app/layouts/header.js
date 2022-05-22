@@ -14,9 +14,9 @@ const Container = styled.div`
   width: 100vw;
   max-width: 100%;
   background-color: #000000;
-  position: sticky;
+  position: fixed;
   top: 0px;
-  z-index: 100;
+  z-index: 9;
 
   div {
     padding: 20px;

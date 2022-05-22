@@ -30,9 +30,15 @@ export const queryAnimeDetail = `
         extraLarge
       }
       episodes
+      duration
       genres
       seasonYear
       description
+      studios {
+        nodes {
+          name
+        }
+      }
       title {
         english
       }

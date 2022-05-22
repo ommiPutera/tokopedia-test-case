@@ -2,6 +2,7 @@ import Layout from "./layouts";
 import AnimeList from "./pages/Anime/List";
 import AnimeDetail from "./pages/Anime/Detail";
 import AnimeContextProvider from "../contexts/AnimeContext";
+import CollectionContextProvider from "../contexts/CollectionContext";
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,10 +14,12 @@ function App() {
     <Router>
       <Layout>
         <AnimeContextProvider>
-          <Routes>
-            <Route path='/' element={<AnimeList />} />
-            <Route path='/detail/:id' exact element={<AnimeDetail />} />
-          </Routes>
+          <CollectionContextProvider>
+            <Routes>
+              <Route path='/' element={<AnimeList />} />
+              <Route path='/detail/:id' exact element={<AnimeDetail />} />
+            </Routes>
+          </CollectionContextProvider>
         </AnimeContextProvider>
       </Layout>
     </Router>

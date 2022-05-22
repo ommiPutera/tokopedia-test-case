@@ -6,14 +6,24 @@ import { queryAnimeDetail } from '../../../graphQL/Queries';
 import { animeApi } from '../../../services/animeApi';
 import { handleResponse } from '../../../utils/handleResponse';
 import LoadingIcon from '../../../assets/LoadingIcon'
+import CollectionInfo from './shared/CollectionInfo';
+import { useCollection } from '../../../contexts/CollectionContext';
+import CreateCollection from './shared/CreateCollection';
 
 const AnimeInfo = React.lazy(() => import('./shared/AnimeInfo'));
 
 function Detail() {
   const {
     detail,
-    dispatch
+    dispatch: dispatchAnime
   } = useAnime();
+
+  const {
+    data,
+    dispatch: dispatchCollection
+  } = useCollection();
+
+  const [show, setShow] = React.useState(false)
 
   let params = useParams();
   let id = params.id;
@@ -25,7 +35,7 @@ function Detail() {
           id: id
         })
         .then(handleResponse)
-        .then(res => dispatch({
+        .then(res => dispatchAnime({
           type: 'load',
           itemsDetail: res.data.Media
         }))
@@ -35,7 +45,7 @@ function Detail() {
         })
     }
     fetchData()
-  }, [dispatch, id])
+  }, [dispatchAnime, id])
 
   React.useEffect(() => {
     load()
@@ -54,39 +64,62 @@ function Detail() {
             <WrapperImage>
               <img src={detail?.bannerImage || '/assets/no_image_available.png'} alt='' />
             </WrapperImage>
-            <Suspense fallback={'Loading..'}>
-              <AnimeInfo detail={detail} />
-            </Suspense>
           </>
           : <LoadingIcon />
       }
+      <WrapperInformation>
+        <Suspense fallback={<h1>Loading..</h1>}>
+          <AnimeInfo detail={detail} />
+        </Suspense>
+        <CollectionInfo />
+      </WrapperInformation>
+
+      <AddToCollection onClick={() => {
+        setShow(true)
+
+
+        // localStorage.setItem('itemsCollectionList', 'test - itemsCollectionList')
+        const collectionList = localStorage.get('itemsCollectionList')
+
+
+        // if (!collectionList) {
+        //   dispatchCollection({
+        //     type: 'addToCollection',
+        //   })
+        // } else {
+
+        // }
+      }}
+      >
+        Add to collection
+      </AddToCollection>
+
+      <CreateCollection
+        showPopUp={show}
+        setShowPopUp={setShow}
+      />
+
     </Container>
   )
 }
 
 const Container = styled.div`
   position: relative;
-  
-  img {
-    height: 140px;
-    width: 100%;
-    object-fit: cover;
-  }
-  
-  h2 {
-    margin: 15px 20px;
-    font-weight: bold;
-  }
+`
 
-  @media (max-width: 768px) {
-    img {
-      height: 150px;
-    }
-  }
+const WrapperInformation = styled.div`
+  position: relative;
+  margin: 0 20px;
 `
 
 const WrapperImage = styled.div`
   position: relative;
+
+  img {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+  }
 
   ::after {
     content: "";
@@ -94,8 +127,37 @@ const WrapperImage = styled.div`
     height: 100%;
     position: absolute;
     left: 0;
-    top: 0;
-    background: linear-gradient(to top,#181818 0,rgba(23,23,23,.987) 1.62%,rgba(23,23,23,.951) 3.1%,rgba(23,23,23,.896) 4.5%,rgba(23,23,23,.825) 5.8%,rgba(23,23,23,.741) 7.06%,rgba(23,23,23,.648) 8.24%,rgba(23,23,23,.55) 9.42%,rgba(23,23,23,.45) 10.58%,rgba(23,23,23,.352) 11.76%,rgba(23,23,23,.259) 12.94%,rgba(23,23,23,.175) 14.2%,rgba(23,23,23,.104) 15.5%,rgba(23,23,23,.049) 16.9%,rgba(23,23,23,.013) 18.38%,rgba(23,23,23,0) 20%);
+    background: rgb(24,24,24);
+    background: linear-gradient(90deg, rgba(24,24,24,1) 0%, rgba(24,24,24,0.8102591378348214) 41%, rgba(255,255,255,0) 100%);
+  }
+
+  @media (max-width: 768px) {
+    img {
+      height: 200px;
+    }
+
+    ::after {
+      background: rgb(24,24,24);
+      background: linear-gradient(0deg, rgba(24,24,24,1) 0%, rgba(24,24,24,0.7262255243894433) 24%, rgba(255,255,255,0) 100%);
+    }
+  }
+`
+
+const AddToCollection = styled.button`
+  margin: 50px 20px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: red;
+  padding: 17px 30px;
+  
+  @media (max-width: 768px) {
+    position: fixed;
+    bottom: 0;
+    margin: 0;
+    width: 100%;
   }
 `
 

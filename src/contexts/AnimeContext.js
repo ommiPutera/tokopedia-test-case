@@ -12,6 +12,12 @@ function animeReducer(state, action) {
         page: localStorage.getItem('page')
       }
     }
+    case 'addToCollection': {
+      return {
+        ...state,
+        itemsCollectionList: action.itemsCollectionList,
+      }
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
     }
@@ -20,7 +26,9 @@ function animeReducer(state, action) {
 
 const AnimeProvider = (props) => {
   const [data, dispatch] = React.useReducer(animeReducer, {
-    items: null,
+    itemsList: null,
+    itemsDetail: null,
+    itemsCollectionList: null,
     page: 1,
   })
 
