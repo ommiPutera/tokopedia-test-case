@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import React from 'react'
 import Pagination from '../../components/Pagination'
-import Card from '../../components/Card'
+import AnimeCard from '../../components/Card/AnimeCard'
 import Show from '../../components/Pagination/show';
 import LoadingCard from '../../components/skeleton/LoadingCard';
 import { Link } from "react-router-dom";
@@ -52,7 +52,7 @@ function List() {
             ?
             list.media.map((item, index) => (
               <Link to={`/detail/${item.id}`} key={item.id} className="link">
-                <Card item={item} />
+                <AnimeCard item={item} />
               </Link>
             ))
             : <LoadingCard count={10} />
@@ -77,7 +77,7 @@ function List() {
 }
 
 const Container = styled.div`
-  margin: 0 10px;
+  margin: 100px 10px;
   
   h1 {
     margin: 30px 0;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 
-function Card({ item: { title, coverImage, episodes } }) {
+function AnimeCard({ item: { title, coverImage, episodes } }) {
   return (
     <Container>
       <img src={coverImage?.extraLarge || '/assets/no_image_available.png'} alt='' />
@@ -47,4 +47,4 @@ const Container = styled.div`
   }
 `
 
-export default Card;
+export default AnimeCard;

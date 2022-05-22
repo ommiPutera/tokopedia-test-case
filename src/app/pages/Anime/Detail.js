@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { useParams } from "react-router-dom";
 import styled from '@emotion/styled';
 import { useAnime } from '../../../contexts/AnimeContext';
@@ -8,9 +8,9 @@ import { handleResponse } from '../../../utils/handleResponse';
 import LoadingIcon from '../../../assets/LoadingIcon'
 import CollectionInfo from './shared/CollectionInfo';
 import { useCollection } from '../../../contexts/CollectionContext';
-import CreateCollection from './shared/CreateCollection';
-
-const AnimeInfo = React.lazy(() => import('./shared/AnimeInfo'));
+import AnimeInfo from './shared/AnimeInfo';
+import PopUpCreateCollection from './shared/PopUpCreateCollection';
+import FormCreateCollection from './shared/FormCreateCollection';
 
 function Detail() {
   const {
@@ -23,7 +23,8 @@ function Detail() {
     dispatch: dispatchCollection
   } = useCollection();
 
-  const [show, setShow] = React.useState(false)
+  const [showPopUp, setShowPopUP] = React.useState(false)
+  const [createCollection, setCreateCollection] = React.useState(false)
 
   let params = useParams();
   let id = params.id;
@@ -64,18 +65,16 @@ function Detail() {
             <WrapperImage>
               <img src={detail?.bannerImage || '/assets/no_image_available.png'} alt='' />
             </WrapperImage>
+            <WrapperInformation>
+              <AnimeInfo detail={detail} />
+              <CollectionInfo />
+            </WrapperInformation>
           </>
           : <LoadingIcon />
       }
-      <WrapperInformation>
-        <Suspense fallback={<h1>Loading..</h1>}>
-          <AnimeInfo detail={detail} />
-        </Suspense>
-        <CollectionInfo />
-      </WrapperInformation>
 
       <AddToCollection onClick={() => {
-        setShow(true)
+        setShowPopUP(true)
 
 
         // localStorage.setItem('itemsCollectionList', 'test - itemsCollectionList')
@@ -94,9 +93,11 @@ function Detail() {
         Add to collection
       </AddToCollection>
 
-      <CreateCollection
-        showPopUp={show}
-        setShowPopUp={setShow}
+      <PopUpCreateCollection
+        showPopUp={showPopUp}
+        setShowPopUp={setShowPopUP}
+        createCollection={createCollection}
+        setCreateCollection={setCreateCollection}
       />
 
     </Container>
