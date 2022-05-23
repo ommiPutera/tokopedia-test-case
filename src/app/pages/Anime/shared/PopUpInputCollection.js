@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import PopUp from '../../../components/PopUp/Basic'
-import { XIcon } from '@heroicons/react/solid';
 import { useCollection } from '../../../../contexts/CollectionContext';
 
-function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm }) {
+function PopUpInputCollection({ showPopUpForm, setShowPopUpForm }) {
   const titleInputRef = React.useRef(null);
   const [isValidTitle, setIsValidTitle] = React.useState(null)
+  const [isNotUniqueTitle, setIsNotUniqueTitle] = React.useState(null)
 
   const [inputs, setInputs] = React.useState({
     collectionName: "",
@@ -22,9 +22,13 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
   }, []);
 
   React.useEffect(() => {
+    for (let i = 0; i < data?.itemsCollectionList?.length; i++) {
+      if (Boolean(data?.itemsCollectionList.find(val => val.collectionName === inputs.collectionName))) setIsNotUniqueTitle(true)
+      else setIsNotUniqueTitle(false)
+    }
     if (/^[A-Za-z0-9 ]+$/.test(inputs?.collectionName) || inputs?.collectionName === '') setIsValidTitle(true)
     else setIsValidTitle(false)
-  }, [inputs]);
+  }, [inputs, data.itemsCollectionList]);
 
   const handleChange = (e) => {
     setInputs((prev) => ({
@@ -63,7 +67,7 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
         setShowPopUpForm(false)
       }}
     >
-      <Container height={!isValidTitle ? "220px" : "190px"}>
+      <Container height={!isValidTitle || isNotUniqueTitle ? "210px" : "190px"}>
         <Content>
           <Head>
             <h4>Create New Collection</h4>
@@ -79,13 +83,14 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
                 value={inputs.collectionName}
                 onChange={handleChange}
               />
-              <p>{!isValidTitle && 'Only title without special characters are allowed'}</p>
+              <p>{!isValidTitle && '- Only title without special characters are allowed.'}</p>
+              <p>{isNotUniqueTitle && '- There is already a collection with this name.'}</p>
             </Body>
             <Footer>
               <CloseButton onClick={() => setShowPopUpForm(false)}>Close</CloseButton>
               <CreateButton
                 type="submit"
-                disabled={!inputs.collectionName || !isValidTitle}
+                disabled={!inputs.collectionName || !isValidTitle || isNotUniqueTitle}
                 onClick={handleSubmit}
               >
                 Create
@@ -168,8 +173,8 @@ const Body = styled.div`
 
   & p {
     line-height: 1.2em;
-    margin: 3px 0;
-    font-size: 12px;
+    margin: 6px 0;
+    font-size: 11px;
     color: #c40017;
   }
 `

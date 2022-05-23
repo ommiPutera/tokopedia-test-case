@@ -4,21 +4,11 @@ import PopUpInputCollection from '../../pages/Anime/shared/PopUpInputCollection'
 
 function NewCollectionCard({
   onClick,
-  showPopUp,
   setShowPopUp,
   showPopUpForm,
   setShowPopUpForm,
   onCreate
 }) {
-  const Form = () => {
-
-    return (
-      <>
-        <PopUpInputCollection />
-      </>
-    )
-  }
-
   return (
     <Container>
       {
@@ -51,8 +41,9 @@ const Container = styled.div`
   & p {
     text-align: left;
     line-height: 1.1;
-    padding: 3px;
-    font-size: 11.5px;
+    padding: 10px 6px;
+    margin: 0 !important;
+    font-size: 12px;
     z-index: 5;
   }
 `
@@ -69,8 +60,8 @@ const WrapperCard = styled.button`
   border-radius: 10px;
 
   @media (max-width: 768px) {
-    height: 107px;
-    width: 107px;
+    height: 105px;
+    width: 105px;
   }
 `
 

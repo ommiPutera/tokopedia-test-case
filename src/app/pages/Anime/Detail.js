@@ -10,7 +10,6 @@ import CollectionInfo from './shared/CollectionInfo';
 import { useCollection } from '../../../contexts/CollectionContext';
 import AnimeInfo from './shared/AnimeInfo';
 import PopUpCreateCollection from './shared/PopUpCreateCollection';
-import FormCreateCollection from './shared/FormCreateCollection';
 
 function Detail() {
   const {
@@ -71,29 +70,13 @@ function Detail() {
           </>
           : <LoadingIcon />
       }
-
-      <AddToCollection onClick={() => {
-        setShowPopUP(true)
-
-        // if (!collectionList) {
-        //   dispatchCollection({
-        //     type: 'addToCollection',
-        //   })
-        // } else {
-
-        // }
-      }}
-      >
-        Add to collection
-      </AddToCollection>
-
+      <AddToCollection onClick={() => setShowPopUP(true)}>Add to collection</AddToCollection>
       <PopUpCreateCollection
         showPopUp={showPopUp}
         setShowPopUp={setShowPopUP}
         createCollection={createCollection}
         setCreateCollection={setCreateCollection}
       />
-
     </Container>
   )
 }

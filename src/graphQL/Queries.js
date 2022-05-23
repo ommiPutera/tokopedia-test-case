@@ -12,6 +12,7 @@ export const queryAnimeList = `
         id
         coverImage {
           large
+          medium
         }
         title {
           english
@@ -28,6 +29,7 @@ export const queryAnimeDetail = `
       bannerImage
       coverImage {
         large
+        medium
       }
       episodes
       duration

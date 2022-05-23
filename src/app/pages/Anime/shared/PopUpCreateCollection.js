@@ -24,10 +24,13 @@ function PopUpCreateCollection({
       in={showPopUp}
       onClose={() => setShowPopUp(false)}
     >
-      <Container height={createCollection && !data ? '340px' : data ? '340px' : '260px'}>
+      <Container height={createCollection && !data.itemsCollectionList ? '250px' : data?.itemsCollectionList?.length > 2 ? '75vh' : data.itemsCollectionList ? '340px' : '260px'}>
         <Content>
           <Head>
-            <h2>{data ? 'Add To' : 'Create'} Collection</h2>
+            <div>
+              <h2>{data ? 'Add To' : 'Create'} Collection</h2>
+              <p>{data ? "Looks like you already have a collection, so let's add your favorite anime to the collection!" : ''}</p>
+            </div>
             <XButton onClick={() => {
               setCreateCollection(false)
               setShowPopUp(false)
@@ -36,14 +39,14 @@ function PopUpCreateCollection({
             </XButton>
           </Head>
           {
-            createCollection && !data
+            createCollection && !data.itemsCollectionList
               ?
               <FormCreateCollection
                 setCreateCollection={setCreateCollection}
                 setShowPopUp={setShowPopUp}
               />
               :
-              data
+              data.itemsCollectionList
                 ?
                 <FormCreateCollection
                   setCreateCollection={setCreateCollection}
@@ -123,7 +126,14 @@ const Head = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 20px 20px 30px 20px;
+  margin: 20px 20px 60px 20px;
+
+  div > p {
+    width: 80%;
+    margin-top: 10px;
+    position: absolute;
+    font-size: 11px;
+  }
 `
 
 const Body = styled.div`

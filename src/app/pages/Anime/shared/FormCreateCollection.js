@@ -44,10 +44,10 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
                 <ExistCollectionCard
                   disabled={Boolean(item.animes.find(val => val.id === data?.itemsDetail.id))}
                   key={item.id}
+                  coverImage={item?.animes[0]?.coverImage?.medium || ''}
                   idCollection={item.id}
                   amount={item.animes.length}
                   onClick={() => onInsertToCollection({ idCollection: item.id })}
-                  coverImage="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx30-1Ro1NFFg28bu.jpg"
                   title={item.collectionName}
                 />
               ))
