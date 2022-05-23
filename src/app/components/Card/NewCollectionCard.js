@@ -1,65 +1,46 @@
 import styled from '@emotion/styled'
 import { PlusCircleIcon } from '@heroicons/react/solid';
+import PopUpInputCollection from '../../pages/Anime/shared/PopUpInputCollection';
 
-function NewCollectionCard({ onClick, onCreate }) {
+function NewCollectionCard({
+  onClick,
+  showPopUp,
+  setShowPopUp,
+  showPopUpForm,
+  setShowPopUpForm,
+  onCreate
+}) {
   const Form = () => {
 
     return (
       <>
-        <InputTitleCollection
-          type="text"
-          autofocus
-          placeholder="Create Title.."
-        />
-        <ButtonRemove>
-          Remove
-        </ButtonRemove>
+        <PopUpInputCollection />
       </>
     )
   }
 
   return (
     <Container>
-      <WrapperCard onClick={onClick}>
-        {
-          !onCreate
-          &&
+      {
+        !onCreate
+        &&
+        <WrapperCard onClick={onClick}>
           <PlusCircleIcon style={{ width: '40px', height: "40px", color: '#fff' }} />
-        }
-      </WrapperCard>
+        </WrapperCard>
+      }
 
       {
         onCreate
         &&
-        <Form />
+        <PopUpInputCollection
+          setShowPopUp={setShowPopUp}
+          showPopUpForm={showPopUpForm}
+          setShowPopUpForm={setShowPopUpForm}
+        />
       }
     </Container>
   )
 }
-
-const InputTitleCollection = styled.input`
-  position: absolute;
-  bottom: 0px;
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  background-color: #2e2e2e;
-  width: 76%;
-  color: #fff;
-  font-size: 10px;
-`
-
-const ButtonRemove = styled.button`
-  position: absolute;
-  bottom: -35px;
-  text-align: center;
-  padding: 5px 8px;
-  border: none;
-  color: #fff;
-  width: 96%;
-  background-color: red;
-  border-radius: 8px;
-`
 
 const Container = styled.div`
   position: relative;

@@ -76,11 +76,6 @@ function Detail() {
       <AddToCollection onClick={() => {
         setShowPopUP(true)
 
-
-        // localStorage.setItem('itemsCollectionList', 'test - itemsCollectionList')
-        const collectionList = localStorage.get('itemsCollectionList')
-
-
         // if (!collectionList) {
         //   dispatchCollection({
         //     type: 'addToCollection',

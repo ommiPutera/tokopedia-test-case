@@ -14,7 +14,9 @@ function Basic({
   top,
   bottom,
   right,
-  left
+  left,
+  zIndex,
+  zIndexBackdrop
 }) {
   const [blockScroll, allowScroll] = useScrollBlock();
   const body = document.body;
@@ -48,6 +50,7 @@ function Basic({
       {state => (
         <PopUp>
           <Wrapper
+            zIndex={zIndex}
             top={top}
             bottom={bottom}
             left={left}
@@ -59,9 +62,9 @@ function Basic({
           >
             {children}
           </Wrapper>
-          <Backdrop onClick={handleClose}
+          <Backdrop zIndexBackdrop={zIndexBackdrop} onClick={handleClose}
             style={{
-              opacity: state === ENTERED ? .5 : 0,
+              opacity: state === ENTERED ? .3 : 0,
             }}
           ></Backdrop>
         </PopUp>
@@ -78,22 +81,21 @@ const PopUp = styled.div`
 
 const Wrapper = styled.div(props => ({
   position: 'fixed',
-  zIndex: '11',
+  zIndex: props.zIndex,
   bottom: props.bottom,
   top: props.top,
   left: props.left,
   right: props.right,
 }))
 
-const Backdrop = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  background-color: #000000;
-  z-index: 10;
-  top: 0;
-  left: 0;
-`
-
+const Backdrop = styled.div(props => ({
+  position: 'fixed',
+  width: '100%',
+  height: '100vh',
+  backgroundColor: '#000000',
+  zIndex: props.zIndexBackdrop,
+  top: 0,
+  left: 0,
+}))
 
 export default Basic;

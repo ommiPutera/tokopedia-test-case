@@ -12,6 +12,8 @@ function PopUpCreateCollection({
 }) {
   return (
     <PopUp
+      zIndex="11"
+      zIndexBackdrop="10"
       bottom={0}
       left={0}
       in={showPopUp}
@@ -32,7 +34,10 @@ function PopUpCreateCollection({
           {
             createCollection
               ?
-              <FormCreateCollection />
+              <FormCreateCollection
+                setCreateCollection={setCreateCollection}
+                setShowPopUp={setShowPopUp}
+              />
               :
               <Body>
                 <p>Looks like you don't have any collections yet..</p>
