@@ -92,7 +92,7 @@ const Wrapper = styled.div`
   
   @media (max-width: 768px) {
     row-gap: 20px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 `
 

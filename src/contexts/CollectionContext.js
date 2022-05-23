@@ -10,16 +10,16 @@ function collectionReducer(state, action) {
         itemsDetail: action.itemsDetail
       }
     }
-    case 'insertIntoCollection': {
+    case 'insertIntoCollections': {
       return {
         ...state,
-        itemsCollectionList: []
+        itemsCollectionList: action.itemsCollectionList
       }
     }
     case 'createCollection': {
       return {
         ...state,
-        itemsCollectionList: action.itemsCollectionList
+        itemsCollectionList: action.itemsCollectionList,
       }
     }
     default: {
@@ -38,7 +38,9 @@ const CollectionProvider = (props) => {
   })
 
   React.useEffect(() => {
-    localStorage.setItem('itemsCollectionList', JSON.stringify(data));
+    if (data?.itemsCollectionList) {
+      localStorage.setItem('itemsCollectionList', JSON.stringify(data));
+    }
   }, [data]);
 
   const value = {

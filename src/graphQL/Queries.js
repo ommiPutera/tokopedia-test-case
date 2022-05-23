@@ -11,7 +11,7 @@ export const queryAnimeList = `
       media(id: $id) {
         id
         coverImage {
-          extraLarge
+          large
         }
         title {
           english
@@ -27,7 +27,7 @@ export const queryAnimeDetail = `
       id
       bannerImage
       coverImage {
-        extraLarge
+        large
       }
       episodes
       duration

@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 function AnimeCard({ item: { title, coverImage, episodes } }) {
   return (
     <Container>
-      <img src={coverImage?.extraLarge || '/assets/no_image_available.png'} alt='' />
+      <img src={coverImage?.large || '/assets/no_image_available.png'} alt='' />
       <AnimeTitle>
         <p>{`${title.english || 'Title not found...'}`}</p>
       </AnimeTitle>
@@ -20,13 +20,14 @@ const AnimeTitle = styled.div`
     margin: 3px 0;
     color: white;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 400;
   }
 
   @media (max-width: 768px) {
     & p {
       margin: 5px 0;
-      font-size: 14px;
+      line-height: 1.15em;
+      font-size: 12px;
     }
   }
 `
@@ -42,7 +43,7 @@ const Container = styled.div`
   }
   @media (max-width: 768px) {
     img {
-      height: 250px;
+      height: 160px;
     }
   }
 `

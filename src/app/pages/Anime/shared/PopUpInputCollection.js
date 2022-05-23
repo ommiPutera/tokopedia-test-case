@@ -32,6 +32,7 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
     const data = {
       id: Math.random(),
       collectionName: inputs.collectionName,
+      animes: []
     }
 
     let itemsLocalStorage = localStorage.getItem('itemsCollectionList')
@@ -49,26 +50,21 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
     <PopUp
       zIndex="12"
       zIndexBackdrop="11"
-      top='25%'
+      top='20%'
       botom='50%'
       in={showPopUpForm}
       onClose={() => {
         setShowPopUpForm(false)
       }}
     >
-      <Container height="210px">
+      <Container height="180px">
         <Content>
           <Head>
             <h4>Create New Collection</h4>
-            <XButton onClick={() => {
-              setShowPopUpForm(false)
-            }}>
-              <XIcon style={{ width: '23px', height: "23px" }} />
-            </XButton>
+            <p>Input title for this collection</p>
           </Head>
           <form>
             <Body>
-              <p>Input title for this collection</p>
               <InputTitleCollection
                 ref={titleInputRef}
                 type="text"
@@ -96,13 +92,14 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
 }
 
 const Container = styled.div(props => ({
+  position: 'relative',
   display: 'fixed',
   overflowY: 'hidden',
   bottom: '0',
-  backgroundColor: '#383838',
+  backgroundColor: '#242424',
   borderRadius: '12px',
-  width: '90vw',
-  marginLeft: '5vw',
+  width: '80vw',
+  marginLeft: '10vw',
   height: props.height,
   transitionProperty: 'all',
   transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
@@ -113,20 +110,9 @@ const Container = styled.div(props => ({
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 100%;
 `
 
-
-const XButton = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  border: none;
-  outline: none;
-  background: none;
-  color: #fff;
-`
 const CreateButton = styled.button(props => ({
   width: '100%',
   padding: '12px 0',
@@ -155,24 +141,28 @@ const InputTitleCollection = styled.input`
   outline: none;
   border-radius: 10px;
   background-color: #2e2e2e;
-  width: 89%;
+  width: 90%;
   color: #fff;
   font-size: 13.5px;
 `
 
 const Head = styled.div`
-  margin: 20px;
+  margin: 15px 0 10px 0;
+  text-align: center;
+
+  & p {
+    margin: 3px 0;
+    font-size: 13.5px;
+  }
 `
 
 const Body = styled.div`
-  margin: 0 20px 25px 20px;
-  
-  & p {
-    margin: 8px 0;
-    font-size: 13px;
-  }
+  margin: 11px 20px;
 `
 const Footer = styled.div`
+  position: absolute;
+  bottom: -1px;
+  width: 100%;
   display: flex;
 `
 
