@@ -25,7 +25,7 @@ function PopUpCreateCollection({
       in={showPopUp}
       onClose={() => setShowPopUp(false)}
     >
-      <Container height={createCollection && !data ? '520px' : data ? '520px' : '260px'}>
+      <Container height={createCollection && !data ? '340px' : data ? '340px' : '260px'}>
         <Content>
           <Head>
             <h2>{data ? 'Add To' : 'Create'} Collection</h2>
@@ -90,9 +90,7 @@ const Content = styled.div`
 `
 
 const XButton = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: relative;
   border: none;
   outline: none;
   background: none;
@@ -123,6 +121,9 @@ const CloseButton = styled.button`
 `
 
 const Head = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 20px 20px 30px 20px;
 `
 

@@ -58,8 +58,8 @@ const WrapperCard = styled.button`
   border-radius: 10px;
 
   @media (max-width: 768px) {
-    height: 130px;
-    width: 100px;
+    height: 105px;
+    width: 105px;
   }
 `
 

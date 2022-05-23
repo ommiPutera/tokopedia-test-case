@@ -16,15 +16,12 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
 
   const onInsertToCollection = () => {
     for (let i = 0; i < data?.itemsCollectionList.length; i++) {
-      if (data?.itemsCollectionList[i].animes.length === 0) {
-        const items = [...data?.itemsCollectionList]
-        items[i].animes = [data?.itemsDetail]
-        localStorage.setItem('itemsCollectionList', JSON.stringify(items));
-        dispatch({ type: 'insertIntoCollections', itemsCollectionList: [...items] })
-        setIsSuccess(true)
-      }
+      const items = [...data?.itemsCollectionList]
+      items[i].animes = [...data?.itemsCollectionList[i].animes, data?.itemsDetail]
+      localStorage.setItem('itemsCollectionList', JSON.stringify(items));
+      dispatch({ type: 'insertIntoCollections', itemsCollectionList: [...items] })
+      setIsSuccess(true)
     }
-
     setTimeout(() => {
       setIsSuccess(false)
     }, 1000)
@@ -75,7 +72,7 @@ const Body = styled.div`
 
 const WrapperCard = styled.div`
   display: grid;
-  column-gap: 10px;
+  column-gap: 12px;
   row-gap: 30px;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   margin: 0 20px;
@@ -86,7 +83,7 @@ const WrapperCard = styled.div`
   }
 
   @media (max-width: 768px) {
-    row-gap: 60px;
+    row-gap: 12px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 `
