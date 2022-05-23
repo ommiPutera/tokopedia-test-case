@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-function ExistCollectionCard({ coverImage, title }) {
+function ExistCollectionCard({ coverImage, title, onClick }) {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <img src={coverImage || '/assets/no_image_available.png'} alt='' />
       <p>{title}</p>
     </Container>

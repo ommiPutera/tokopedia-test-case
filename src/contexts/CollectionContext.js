@@ -4,10 +4,22 @@ export const CollectionContext = React.createContext();
 
 function collectionReducer(state, action) {
   switch (action.type) {
+    case 'load': {
+      return {
+        ...state,
+        itemsDetail: action.itemsDetail
+      }
+    }
+    case 'insertIntoCollection': {
+      return {
+        ...state,
+        itemsCollectionList: []
+      }
+    }
     case 'createCollection': {
       return {
         ...state,
-        itemsCollectionList: action.itemsCollectionList,
+        itemsCollectionList: action.itemsCollectionList
       }
     }
     default: {
@@ -18,7 +30,8 @@ function collectionReducer(state, action) {
 
 const CollectionProvider = (props) => {
   const [data, dispatch] = React.useReducer(collectionReducer, {
-    itemsCollectionList: null
+    itemsCollectionList: null,
+    itemsDetail: null
   }, () => {
     const localData = localStorage.getItem('itemsCollectionList');
     return localData ? JSON.parse(localData) : [];
@@ -29,7 +42,7 @@ const CollectionProvider = (props) => {
   }, [data]);
 
   const value = {
-    data: data.itemsCollectionList,
+    data,
     dispatch
   }
 

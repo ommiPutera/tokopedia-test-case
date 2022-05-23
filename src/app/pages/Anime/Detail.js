@@ -18,6 +18,10 @@ function Detail() {
     dispatch: dispatchAnime
   } = useAnime();
 
+  const {
+    dispatch: dispatchCollection
+  } = useCollection();
+
   const [showPopUp, setShowPopUP] = React.useState(false)
   const [createCollection, setCreateCollection] = React.useState(false)
 
@@ -31,17 +35,17 @@ function Detail() {
           id: id
         })
         .then(handleResponse)
-        .then(res => dispatchAnime({
-          type: 'load',
-          itemsDetail: res.data.Media
-        }))
+        .then(res => {
+          dispatchAnime({ type: 'load', itemsDetail: res.data.Media })
+          dispatchCollection({ type: 'load', itemsDetail: res.data.Media })
+        })
         .catch((err) => {
           alert('Error, check console');
           console.error(err);
         })
     }
     fetchData()
-  }, [dispatchAnime, id])
+  }, [dispatchAnime, dispatchCollection, id])
 
   React.useEffect(() => {
     load()

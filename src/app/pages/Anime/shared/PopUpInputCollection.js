@@ -35,9 +35,7 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
     }
 
     let itemsLocalStorage = localStorage.getItem('itemsCollectionList')
-    let localData = JSON.parse(itemsLocalStorage)
-
-    console.log(localData)
+    let localData = itemsLocalStorage ? JSON.parse(itemsLocalStorage) : []
     dispatchCollection({
       type: 'createCollection',
       itemsCollectionList: [...localData?.itemsCollectionList || [], data]

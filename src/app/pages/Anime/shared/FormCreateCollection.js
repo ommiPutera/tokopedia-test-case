@@ -13,6 +13,11 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
     dispatch: dispatchCollection
   } = useCollection();
 
+  const onInsertToCollection = () => {
+    console.log(data)
+    // dispatchCollection({ type: 'insertIntoCollection' })
+  }
+
   return (
     <Body>
       <WrapperCard>
@@ -20,10 +25,11 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
           setShowPopUpForm(true)
         }} />
         {
-          data
+          data?.itemsCollectionList
           &&
-          data.map((item) => (
+          data?.itemsCollectionList.map((item) => (
             <ExistCollectionCard
+              onClick={() => onInsertToCollection()}
               coverImage="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx30-1Ro1NFFg28bu.jpg"
               title={item.collectionName}
             />
