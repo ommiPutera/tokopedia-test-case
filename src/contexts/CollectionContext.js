@@ -4,7 +4,7 @@ export const CollectionContext = React.createContext();
 
 function collectionReducer(state, action) {
   switch (action.type) {
-    case 'addToCollection': {
+    case 'createCollection': {
       return {
         ...state,
         itemsCollectionList: action.itemsCollectionList,
@@ -19,10 +19,17 @@ function collectionReducer(state, action) {
 const CollectionProvider = (props) => {
   const [data, dispatch] = React.useReducer(collectionReducer, {
     itemsCollectionList: null
+  }, () => {
+    const localData = localStorage.getItem('itemsCollectionList');
+    return localData ? JSON.parse(localData) : [];
   })
 
+  React.useEffect(() => {
+    localStorage.setItem('itemsCollectionList', JSON.stringify(data));
+  }, [data]);
+
   const value = {
-    list: data.itemsCollectionList,
+    data: data.itemsCollectionList,
     dispatch
   }
 

@@ -18,11 +18,6 @@ function Detail() {
     dispatch: dispatchAnime
   } = useAnime();
 
-  const {
-    data,
-    dispatch: dispatchCollection
-  } = useCollection();
-
   const [showPopUp, setShowPopUP] = React.useState(false)
   const [createCollection, setCreateCollection] = React.useState(false)
 

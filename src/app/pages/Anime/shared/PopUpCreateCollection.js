@@ -3,6 +3,7 @@ import React from 'react'
 import PopUp from '../../../components/PopUp/Basic'
 import { XIcon } from '@heroicons/react/solid';
 import FormCreateCollection from './FormCreateCollection';
+import { useCollection } from '../../../../contexts/CollectionContext';
 
 function PopUpCreateCollection({
   showPopUp,
@@ -10,6 +11,11 @@ function PopUpCreateCollection({
   createCollection,
   setCreateCollection
 }) {
+  const {
+    data,
+    dispatch: dispatchCollection
+  } = useCollection();
+
   return (
     <PopUp
       zIndex="11"
@@ -19,10 +25,10 @@ function PopUpCreateCollection({
       in={showPopUp}
       onClose={() => setShowPopUp(false)}
     >
-      <Container height={createCollection ? '480px' : '260px'}>
+      <Container height={createCollection && !data ? '520px' : data ? '520px' : '260px'}>
         <Content>
           <Head>
-            <h2>Create Collection</h2>
+            <h2>{data ? 'Add To' : 'Create'} Collection</h2>
             <XButton onClick={() => {
               setCreateCollection(false)
               setShowPopUp(false)
@@ -30,30 +36,35 @@ function PopUpCreateCollection({
               <XIcon style={{ width: '30px', height: "30px" }} />
             </XButton>
           </Head>
-
           {
-            createCollection
+            createCollection && !data
               ?
               <FormCreateCollection
                 setCreateCollection={setCreateCollection}
                 setShowPopUp={setShowPopUp}
               />
               :
-              <Body>
-                <p>Looks like you don't have any collections yet..</p>
-                <CreateButton onClick={() => {
-                  setCreateCollection(false)
-                  setCreateCollection(true)
-                }}>
-                  Create
-                </CreateButton>
-                <CloseButton onClick={() => {
-                  setCreateCollection(false)
-                  setShowPopUp(false)
-                }}>
-                  Close
-                </CloseButton>
-              </Body>
+              data
+                ?
+                <FormCreateCollection
+                  setCreateCollection={setCreateCollection}
+                  setShowPopUp={setShowPopUp}
+                />
+                :
+                <Body>
+                  <p>Looks like you don't have any collections yet..</p>
+                  <CreateButton onClick={() => {
+                    setCreateCollection(true)
+                  }}>
+                    Create
+                  </CreateButton>
+                  <CloseButton onClick={() => {
+                    setCreateCollection(false)
+                    setShowPopUp(false)
+                  }}>
+                    Close
+                  </CloseButton>
+                </Body>
           }
         </Content>
       </Container>

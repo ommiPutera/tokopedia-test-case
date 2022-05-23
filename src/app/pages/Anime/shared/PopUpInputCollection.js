@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 import PopUp from '../../../components/PopUp/Basic'
 import { XIcon } from '@heroicons/react/solid';
+import { useCollection } from '../../../../contexts/CollectionContext';
 
 function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm }) {
   const titleInputRef = React.useRef(null);
@@ -9,6 +10,11 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
   const [inputs, setInputs] = React.useState({
     collectionName: "",
   })
+
+  const {
+    data,
+    dispatch: dispatchCollection
+  } = useCollection();
 
   React.useEffect(() => {
     titleInputRef.current.focus();
@@ -22,13 +28,20 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
   }
 
   const handleSubmit = (e) => {
+    setShowPopUpForm(false)
     const data = {
+      id: Math.random(),
       collectionName: inputs.collectionName,
     }
 
-    console.log(data)
+    let itemsLocalStorage = localStorage.getItem('itemsCollectionList')
+    let localData = JSON.parse(itemsLocalStorage)
 
-    // dispatch({ type: CREATE_TODO, data })
+    console.log(localData)
+    dispatchCollection({
+      type: 'createCollection',
+      itemsCollectionList: [...localData?.itemsCollectionList || [], data]
+    })
     setInputs({
       collectionName: "",
     })
@@ -38,7 +51,7 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
     <PopUp
       zIndex="12"
       zIndexBackdrop="11"
-      top='20%'
+      top='25%'
       botom='50%'
       in={showPopUpForm}
       onClose={() => {
@@ -55,9 +68,9 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
               <XIcon style={{ width: '23px', height: "23px" }} />
             </XButton>
           </Head>
-          <form action="" onSubmit={handleSubmit}>
+          <form>
             <Body>
-              <p>Input name for this collection</p>
+              <p>Input title for this collection</p>
               <InputTitleCollection
                 ref={titleInputRef}
                 type="text"
@@ -71,12 +84,8 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
               <CloseButton onClick={() => setShowPopUpForm(false)}>Close</CloseButton>
               <CreateButton
                 type="submit"
-                disabled={true}
-                onClick={() => {
-                  setShowPopUpForm(false)
-                  localStorage.setItem('itemsCollectionList', 'test - itemsCollectionList')
-                  // const collectionList = localStorage.get('itemsCollectionList')
-                }}
+                disabled={!inputs.collectionName}
+                onClick={handleSubmit}
               >
                 Create
               </CreateButton>
@@ -94,8 +103,8 @@ const Container = styled.div(props => ({
   bottom: '0',
   backgroundColor: '#383838',
   borderRadius: '12px',
-  width: '75vw',
-  marginLeft: '12.5vw',
+  width: '90vw',
+  marginLeft: '5vw',
   height: props.height,
   transitionProperty: 'all',
   transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
@@ -120,15 +129,16 @@ const XButton = styled.button`
   background: none;
   color: #fff;
 `
-const CreateButton = styled.button`
-  width: 100%;
-  padding: 12px 0;
-  border: none;
-  outline: none;
-  background-color: red;
-  font-size: 13px;
-  color: #fff;
-`
+const CreateButton = styled.button(props => ({
+  width: '100%',
+  padding: '12px 0',
+  border: 'none',
+  outline: 'none',
+  backgroundColor: 'red',
+  fontSize: '13px',
+  color: '#fff',
+  opacity: props.disabled && 0.3
+}))
 
 const CloseButton = styled.button`
   width: 100%;

@@ -64,7 +64,7 @@ function Basic({
           </Wrapper>
           <Backdrop zIndexBackdrop={zIndexBackdrop} onClick={handleClose}
             style={{
-              opacity: state === ENTERED ? .3 : 0,
+              opacity: state === ENTERED ? .7 : 0,
             }}
           ></Backdrop>
         </PopUp>

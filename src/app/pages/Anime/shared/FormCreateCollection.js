@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import React from 'react'
+import { useCollection } from '../../../../contexts/CollectionContext';
 import ExistCollectionCard from '../../../components/Card/ExistCollectionCard';
 import NewCollectionCard from '../../../components/Card/NewCollectionCard';
 
@@ -7,9 +8,10 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
   const [isInputTitle, setIsInputTitle] = React.useState(false)
   const [showPopUpForm, setShowPopUpForm] = React.useState(false)
 
-  const createCollection = () => {
-
-  }
+  const {
+    data,
+    dispatch: dispatchCollection
+  } = useCollection();
 
   return (
     <Body>
@@ -17,10 +19,16 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
         <NewCollectionCard onClick={() => {
           setShowPopUpForm(true)
         }} />
-        <ExistCollectionCard
-          coverImage="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx30-1Ro1NFFg28bu.jpg"
-          title="Neon Genesis Evangelion"
-        />
+        {
+          data
+          &&
+          data.map((item) => (
+            <ExistCollectionCard
+              coverImage="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx30-1Ro1NFFg28bu.jpg"
+              title={item.collectionName}
+            />
+          ))
+        }
 
         {
           showPopUpForm
