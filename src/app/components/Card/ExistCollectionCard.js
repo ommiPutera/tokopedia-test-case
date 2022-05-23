@@ -26,6 +26,7 @@ const Container = styled.div`
 
 const Title = styled.p`
   text-align: left;
+  color: #fff;
   line-height: 1.1em !important;
   padding: 10px 6px 0 6px !important;
   margin: 0 !important;

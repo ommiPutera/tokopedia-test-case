@@ -1,11 +1,18 @@
 import styled from '@emotion/styled'
+import { CollectionIcon } from '@heroicons/react/solid';
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
     <Container>
-      <div>
-        <p>Header</p>
-      </div>
+      <WrapperHeader>
+        <Link to='/' className="link">
+          <p>Anime Test Case</p>
+        </Link>
+        <Link to='/collection/list' className="link">
+          <CollectionIcon style={{ width: '27px', height: "27px" }} />
+        </Link>
+      </WrapperHeader>
     </Container>
   )
 }
@@ -17,9 +24,16 @@ const Container = styled.div`
   position: fixed;
   top: 0px;
   z-index: 9;
+`
 
-  div {
-    padding: 20px;
+const WrapperHeader = styled.div`
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & p, svg {
+    color: #fff;
   }
 `
 
