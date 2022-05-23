@@ -12,8 +12,7 @@ function PopUpCreateCollection({
   setCreateCollection
 }) {
   const {
-    data,
-    dispatch: dispatchCollection
+    data
   } = useCollection();
 
   return (

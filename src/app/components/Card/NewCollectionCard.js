@@ -24,9 +24,12 @@ function NewCollectionCard({
       {
         !onCreate
         &&
-        <WrapperCard onClick={onClick}>
-          <PlusCircleIcon style={{ width: '40px', height: "40px", color: '#fff' }} />
-        </WrapperCard>
+        <>
+          <WrapperCard onClick={onClick}>
+            <PlusCircleIcon style={{ width: '40px', height: "40px", color: '#fff' }} />
+          </WrapperCard>
+          <p>New Collection</p>
+        </>
       }
 
       {
@@ -44,6 +47,14 @@ function NewCollectionCard({
 
 const Container = styled.div`
   position: relative;
+
+  & p {
+    text-align: left;
+    line-height: 1.1;
+    padding: 3px;
+    font-size: 11.5px;
+    z-index: 5;
+  }
 `
 
 const WrapperCard = styled.button`
@@ -58,8 +69,8 @@ const WrapperCard = styled.button`
   border-radius: 10px;
 
   @media (max-width: 768px) {
-    height: 105px;
-    width: 105px;
+    height: 107px;
+    width: 107px;
   }
 `
 

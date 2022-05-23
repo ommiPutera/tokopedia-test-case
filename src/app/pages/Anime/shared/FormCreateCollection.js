@@ -14,14 +14,17 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
     dispatch,
   } = useCollection();
 
-  const onInsertToCollection = () => {
+  const onInsertToCollection = ({ idCollection }) => {
     for (let i = 0; i < data?.itemsCollectionList.length; i++) {
-      const items = [...data?.itemsCollectionList]
-      items[i].animes = [...data?.itemsCollectionList[i].animes, data?.itemsDetail]
-      localStorage.setItem('itemsCollectionList', JSON.stringify(items));
-      dispatch({ type: 'insertIntoCollections', itemsCollectionList: [...items] })
-      setIsSuccess(true)
+      if (data?.itemsCollectionList[i].id === idCollection) {
+        const items = [...data?.itemsCollectionList]
+        items[i].animes = [...data?.itemsCollectionList[i].animes, data?.itemsDetail]
+        localStorage.setItem('itemsCollectionList', JSON.stringify(items));
+        dispatch({ type: 'insertIntoCollections', itemsCollectionList: [...items] })
+        setIsSuccess(true)
+      }
     }
+
     setTimeout(() => {
       setIsSuccess(false)
     }, 1000)
@@ -41,6 +44,8 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
                 <ExistCollectionCard
                   disabled={Boolean(item.animes.find(val => val.id === data?.itemsDetail.id))}
                   key={item.id}
+                  idCollection={item.id}
+                  amount={item.animes.length}
                   onClick={() => onInsertToCollection({ idCollection: item.id })}
                   coverImage="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx30-1Ro1NFFg28bu.jpg"
                   title={item.collectionName}

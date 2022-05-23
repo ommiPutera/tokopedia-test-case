@@ -6,6 +6,7 @@ import { useCollection } from '../../../../contexts/CollectionContext';
 
 function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm }) {
   const titleInputRef = React.useRef(null);
+  const [isValidTitle, setIsValidTitle] = React.useState(null)
 
   const [inputs, setInputs] = React.useState({
     collectionName: "",
@@ -19,6 +20,11 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
   React.useEffect(() => {
     titleInputRef.current.focus();
   }, []);
+
+  React.useEffect(() => {
+    if (/^[A-Za-z0-9 ]+$/.test(inputs?.collectionName) || inputs?.collectionName === '') setIsValidTitle(true)
+    else setIsValidTitle(false)
+  }, [inputs]);
 
   const handleChange = (e) => {
     setInputs((prev) => ({
@@ -57,7 +63,7 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
         setShowPopUpForm(false)
       }}
     >
-      <Container height="180px">
+      <Container height={!isValidTitle ? "220px" : "190px"}>
         <Content>
           <Head>
             <h4>Create New Collection</h4>
@@ -73,12 +79,13 @@ function PopUpInputCollection({ setShowPopUp, showPopUpForm, setShowPopUpForm })
                 value={inputs.collectionName}
                 onChange={handleChange}
               />
+              <p>{!isValidTitle && 'Only title without special characters are allowed'}</p>
             </Body>
             <Footer>
               <CloseButton onClick={() => setShowPopUpForm(false)}>Close</CloseButton>
               <CreateButton
                 type="submit"
-                disabled={!inputs.collectionName}
+                disabled={!inputs.collectionName || !isValidTitle}
                 onClick={handleSubmit}
               >
                 Create
@@ -141,7 +148,7 @@ const InputTitleCollection = styled.input`
   outline: none;
   border-radius: 10px;
   background-color: #2e2e2e;
-  width: 90%;
+  width: 92%;
   color: #fff;
   font-size: 13.5px;
 `
@@ -157,7 +164,14 @@ const Head = styled.div`
 `
 
 const Body = styled.div`
-  margin: 11px 20px;
+  margin: 11px 20px 30px 20px;
+
+  & p {
+    line-height: 1.2em;
+    margin: 3px 0;
+    font-size: 12px;
+    color: #c40017;
+  }
 `
 const Footer = styled.div`
   position: absolute;

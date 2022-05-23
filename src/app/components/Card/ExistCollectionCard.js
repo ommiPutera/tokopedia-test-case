@@ -1,27 +1,40 @@
 import React from 'react'
 import styled from '@emotion/styled'
 
-function ExistCollectionCard({ coverImage, disabled, title, onClick }) {
+function ExistCollectionCard({ coverImage, disabled, title, amount, onClick }) {
   return (
     <Container>
-      <WrapperCard onClick={onClick} style={{ border: disabled && '1px solid #075c00' }}>
+      <WrapperCard onClick={!disabled ? onClick : null} style={{ border: disabled && '1px solid #075c00' }}>
         <img src={coverImage || '/assets/no_image_available.png'} alt='' style={{ opacity: disabled ? '.4' : '1' }} />
       </WrapperCard>
-      <p>{title}</p>
+      <Title>{title}</Title>
+      <Amount>{amount}</Amount>
     </Container>
   )
 }
 
 const Container = styled.div`
   display: block;
+  margin: 0;
+`
 
-  & p {
-    text-align: left;
-    line-height: 1.1;
-    padding: 5px;
-    font-size: 11.5px;
-    z-index: 5;
-  }
+const Title = styled.p`
+  text-align: left;
+  line-height: 1.1;
+  padding: 3px;
+  margin: 0 !important;
+  font-size: 11.5px;
+  z-index: 5;
+`
+
+const Amount = styled.p`
+  text-align: left;
+  line-height: 1.1;
+  color: #616161;
+  padding: 3px;
+  margin: 0 !important;
+  font-size: 11.5px;
+  z-index: 5;
 `
 
 const WrapperCard = styled.div`
