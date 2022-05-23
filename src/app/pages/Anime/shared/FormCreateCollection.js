@@ -73,6 +73,7 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
 
 const Body = styled.div`
   position: relative;
+  margin-top: 60px;
 `
 
 const WrapperCard = styled.div`
