@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import PopUp from '../../../components/PopUp/Basic'
-import { useCollection } from '../../../../contexts/CollectionContext';
+import PopUp from '../../components/PopUp/Basic'
+import { useCollection } from '../../../contexts/CollectionContext';
 
 function PopUpInputCollection({ showPopUpForm, setShowPopUpForm }) {
   const titleInputRef = React.useRef(null);

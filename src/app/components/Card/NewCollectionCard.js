@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { PlusCircleIcon } from '@heroicons/react/solid';
-import PopUpInputCollection from '../../pages/Anime/shared/PopUpInputCollection';
+import PopUpInputCollection from '../../pages/shared/PopUpInputCollection';
 
 function NewCollectionCard({
   onClick,

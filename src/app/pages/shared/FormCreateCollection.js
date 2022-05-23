@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import LoadingIcon from '../../../../assets/LoadingIcon';
-import { useCollection } from '../../../../contexts/CollectionContext';
-import ExistCollectionCard from '../../../components/Card/ExistCollectionCard';
-import NewCollectionCard from '../../../components/Card/NewCollectionCard';
+import LoadingIcon from '../../../assets/LoadingIcon';
+import { useCollection } from '../../../contexts/CollectionContext';
+import ExistCollectionCard from '../../components/Card/ExistCollectionCard';
+import NewCollectionCard from '../../components/Card/NewCollectionCard';
 
 function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) {
   const [showPopUpForm, setShowPopUpForm] = React.useState(false)

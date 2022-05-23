@@ -6,10 +6,10 @@ import { queryAnimeDetail } from '../../../graphQL/Queries';
 import { animeApi } from '../../../services/animeApi';
 import { handleResponse } from '../../../utils/handleResponse';
 import LoadingIcon from '../../../assets/LoadingIcon'
-import CollectionInfo from './shared/CollectionInfo';
+import CollectionInfo from '../shared/CollectionInfo';
 import { useCollection } from '../../../contexts/CollectionContext';
-import AnimeInfo from './shared/AnimeInfo';
-import PopUpCreateCollection from './shared/PopUpCreateCollection';
+import AnimeInfo from '../shared/AnimeInfo';
+import PopUpCreateCollection from '../shared/PopUpCreateCollection';
 
 function Detail() {
   const {

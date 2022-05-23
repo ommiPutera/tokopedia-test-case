@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
 import React from 'react'
-import PopUp from '../../../components/PopUp/Basic'
+import PopUp from '../../components/PopUp/Basic'
 import { XIcon } from '@heroicons/react/solid';
 import FormCreateCollection from './FormCreateCollection';
-import { useCollection } from '../../../../contexts/CollectionContext';
+import { useCollection } from '../../../contexts/CollectionContext';
 
 function PopUpCreateCollection({
   showPopUp,
