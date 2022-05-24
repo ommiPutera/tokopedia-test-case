@@ -2,7 +2,7 @@ import React from 'react'
 import PopUp from '../../components/PopUp/Basic'
 import styled from '@emotion/styled'
 
-function PopUpRemoveCollection({ onClick, showPopUpConfirmation, setShowPopUpConfirmation }) {
+function PopUpRemoveCollection({ onClick, message, showPopUpConfirmation, setShowPopUpConfirmation }) {
   return (
     <PopUp
       zIndex="12"
@@ -20,7 +20,7 @@ function PopUpRemoveCollection({ onClick, showPopUpConfirmation, setShowPopUpCon
             <h4>Remove Collection</h4>
           </Head>
           <Body>
-            <p>Are you sure you want to delete this collection?</p>
+            <p>{message || "Are you sure you want to delete this collection?"}</p>
           </Body>
           <Footer>
             <CloseButton onClick={() => setShowPopUpConfirmation(false)}>Close</CloseButton>

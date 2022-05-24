@@ -1,10 +1,13 @@
 import styled from '@emotion/styled'
+import { Link } from "react-router-dom";
 import RemoveCollectionBtn from '../Button/RemoveCollectionBtn';
 
-function AnimeCard({ item: { title, coverImage }, withRemoveBtn, onRemove }) {
+function AnimeCard({ item: { id, title, coverImage }, to, withRemoveBtn, onRemove }) {
   return (
     <Container>
-      <img src={coverImage?.large || '/assets/no_image_available.png'} alt='' />
+      <Link to={to} key={id} className="link">
+        <img src={coverImage?.large || '/assets/no_image_available.png'} alt='' />
+      </Link>
       {
         withRemoveBtn
         &&

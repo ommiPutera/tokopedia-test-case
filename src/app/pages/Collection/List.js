@@ -71,29 +71,30 @@ function List() {
       <WrapperCard>
         <NewCollectionCard onClick={() => setShowPopUpCreate(true)} />
         {
-          data?.itemsCollectionList
-          &&
-          data?.itemsCollectionList.map((item, index) => (
-            <ExistCollectionCard
-              key={item.id}
-              onRedirect={() => dispatch({
-                type: 'loadCollectionDetail',
-                itemsCollectionDetail: item.animes,
-                collectionName: item.collectionName
-              })}
-              to={`/collection/detail/${item.id}`}
-              onRemove={() => handleRemoveCollection({ idCollection: item.id })}
-              onEdit={() => {
-                if (initialValue) setShowPopUpEdit(true)
-                setIdCollectiononEdit(item.id)
-              }}
-              coverImage={item?.animes[0]?.coverImage.medium}
-              title={item.collectionName}
-              amount={item.animes.length}
-              withRemoveBtn
-              withEditBtn
-            />
-          ))
+          data?.itemsCollectionList?.length
+            ?
+            data?.itemsCollectionList.map((item, index) => (
+              <ExistCollectionCard
+                key={item.id}
+                onRedirect={() => dispatch({
+                  type: 'loadCollectionDetail',
+                  itemsCollectionDetail: item?.animes,
+                  collectionName: item.collectionName
+                })}
+                to={`/collection/detail/${item.id}`}
+                onRemove={() => handleRemoveCollection({ idCollection: item.id })}
+                onEdit={() => {
+                  if (initialValue) setShowPopUpEdit(true)
+                  setIdCollectiononEdit(item.id)
+                }}
+                coverImage={item?.animes[0]?.coverImage.medium}
+                title={item.collectionName}
+                amount={item?.animes.length || 0}
+                withRemoveBtn
+                withEditBtn
+              />
+            ))
+            : null
         }
       </WrapperCard>
       <PopUpRemoveCollection

@@ -4,7 +4,6 @@ import Pagination from '../../components/Pagination'
 import AnimeCard from '../../components/Card/AnimeCard'
 import Show from '../../components/Pagination/show';
 import LoadingCard from '../../components/skeleton/LoadingCard';
-import { Link } from "react-router-dom";
 import { useAnime } from '../../../contexts/AnimeContext';
 import { queryAnimeList } from '../../../graphQL/Queries';
 import { animeApi } from '../../../services/animeApi';
@@ -51,9 +50,11 @@ function List() {
           list
             ?
             list.media.map((item, index) => (
-              <Link to={`/detail/${item.id}`} key={item.id} className="link">
-                <AnimeCard item={item} />
-              </Link>
+              <AnimeCard
+                to={`/detail/${item.id}`}
+                key={item.id}
+                item={item}
+              />
             ))
             : <LoadingCard count={10} />
         }

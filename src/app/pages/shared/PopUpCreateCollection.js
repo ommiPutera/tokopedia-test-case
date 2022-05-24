@@ -24,7 +24,7 @@ function PopUpCreateCollection({
       in={showPopUp}
       onClose={() => setShowPopUp(false)}
     >
-      <Container height={createCollection && !data.itemsCollectionList ? '280px' : data?.itemsCollectionList?.length > 2 ? '75vh' : data.itemsCollectionList ? '340px' : '260px'}>
+      <Container height={createCollection && !data.itemsCollectionList ? '280px' : data?.itemsCollectionList?.length > 2 ? '55vh' : data.itemsCollectionList ? '340px' : '240px'}>
         <Content>
           <Head>
             <div>

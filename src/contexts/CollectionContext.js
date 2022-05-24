@@ -22,6 +22,13 @@ function collectionReducer(state, action) {
         itemsCollectionList: action.itemsCollectionList
       }
     }
+    case 'removeAnime': {
+      return {
+        ...state,
+        itemsCollectionList: action.itemsCollectionList,
+        itemsCollectionDetail: action.itemsCollectionDetail
+      }
+    }
     case 'editCollection': {
       return {
         ...state,
