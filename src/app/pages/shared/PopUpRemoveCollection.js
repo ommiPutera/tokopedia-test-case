@@ -2,7 +2,7 @@ import React from 'react'
 import PopUp from '../../components/PopUp/Basic'
 import styled from '@emotion/styled'
 
-function PopUpRemoveCollection({ showPopUpConfirmation, setShowPopUpConfirmation }) {
+function PopUpRemoveCollection({ onClick, showPopUpConfirmation, setShowPopUpConfirmation }) {
   return (
     <PopUp
       zIndex="12"
@@ -14,15 +14,23 @@ function PopUpRemoveCollection({ showPopUpConfirmation, setShowPopUpConfirmation
         setShowPopUpConfirmation(false)
       }}
     >
-      <Container height="210px">
+      <Container height="180px">
         <Content>
           <Head>
             <h4>Remove Collection</h4>
-            <p>Are you sure you want to delete this collection?</p>
           </Head>
           <Body>
-            Remove
+            <p>Are you sure you want to delete this collection?</p>
           </Body>
+          <Footer>
+            <CloseButton onClick={() => setShowPopUpConfirmation(false)}>Close</CloseButton>
+            <RemoveButton
+              type="button"
+              onClick={onClick}
+            >
+              Yes, Remove
+            </RemoveButton>
+          </Footer>
         </Content>
       </Container>
     </PopUp>
@@ -64,11 +72,38 @@ const Body = styled.div`
   margin: 11px 20px 30px 20px;
 
   & p {
-    line-height: 1.2em;
+    line-height: 1.5em;
     margin: 6px 0;
-    font-size: 11px;
-    color: #c40017;
+    font-size: 14px;
   }
+`
+
+const RemoveButton = styled.button(props => ({
+  width: '100%',
+  padding: '12px 0',
+  border: 'none',
+  outline: 'none',
+  backgroundColor: 'red',
+  fontSize: '13px',
+  color: '#fff',
+  opacity: props.disabled && 0.3
+}))
+
+const CloseButton = styled.button`
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  outline: none;
+  background-color: #2e2e2e;
+  font-size: 13px;
+  color: #fff;
+`
+
+const Footer = styled.div`
+  position: absolute;
+  bottom: -1px;
+  width: 100%;
+  display: flex;
 `
 
 export default PopUpRemoveCollection

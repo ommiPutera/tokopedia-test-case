@@ -11,11 +11,17 @@ function List() {
     dispatch
   } = useCollection();
   const [showPopUpForm, setShowPopUpForm] = React.useState(false)
+  const [agreeToRemove, setAgreeToRemove] = React.useState(false)
+  const [items, setItems] = React.useState([])
   const [showPopUpConfirmation, setShowPopUpConfirmation] = React.useState(false)
 
   React.useEffect(() => {
-    // console.log(data)
-  }, [])
+    if (agreeToRemove && items) {
+      localStorage.setItem('itemsCollectionList', JSON.stringify(items));
+      dispatch({ type: 'removeCollection', itemsCollectionList: [...items] })
+      setShowPopUpConfirmation(false)
+    }
+  }, [dispatch, agreeToRemove, items])
 
   const handleRemoveCollection = ({ idCollection }) => {
     for (let i = 0; i < data?.itemsCollectionList.length; i++) {
@@ -24,9 +30,7 @@ function List() {
         const arrList = [...data.itemsCollectionList]
         arrList.splice(i, 1)
         const items = [...arrList]
-        console.log(items)
-        // localStorage.setItem('itemsCollectionList', JSON.stringify(items));
-        // dispatch({ type: 'removeCollection', itemsCollectionList: [...items] })
+        setItems(items)
       }
     }
   }
@@ -52,6 +56,7 @@ function List() {
         }
       </WrapperCard>
       <PopUpRemoveCollection
+        onClick={() => setAgreeToRemove(true)}
         showPopUpConfirmation={showPopUpConfirmation}
         setShowPopUpConfirmation={setShowPopUpConfirmation}
       />
