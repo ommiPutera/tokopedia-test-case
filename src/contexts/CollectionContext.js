@@ -34,6 +34,13 @@ function collectionReducer(state, action) {
         itemsCollectionList: action.itemsCollectionList,
       }
     }
+    case 'loadCollectionDetail': {
+      return {
+        ...state,
+        itemsCollectionDetail: action.itemsCollectionDetail,
+        collectionName: action.collectionName,
+      }
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
     }
@@ -43,7 +50,9 @@ function collectionReducer(state, action) {
 const CollectionProvider = (props) => {
   const [data, dispatch] = React.useReducer(collectionReducer, {
     itemsCollectionList: null,
+    itemsCollectionDetail: null,
     itemsDetail: null,
+    collectionName: '',
   }, () => {
     const localData = localStorage.getItem('itemsCollectionList');
     return localData ? JSON.parse(localData) : [];

@@ -22,7 +22,7 @@ const AnimeProvider = (props) => {
   const [data, dispatch] = React.useReducer(animeReducer, {
     itemsList: null,
     itemsDetail: null,
-    page: 1,
+    page: null,
   })
 
   const value = {

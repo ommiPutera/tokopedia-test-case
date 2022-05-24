@@ -6,7 +6,7 @@ import { useCollection } from '../../../contexts/CollectionContext';
 import ExistCollectionCard from '../../components/Card/ExistCollectionCard';
 import NewCollectionCard from '../../components/Card/NewCollectionCard';
 
-function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) {
+function FormCreateCollection({ setShowPopUp, setCreateCollection }) {
   const [showPopUpForm, setShowPopUpForm] = React.useState(false)
   const [isSuccess, setIsSuccess] = React.useState(false)
   const [openSnackbar] = useSnackbar({

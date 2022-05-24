@@ -67,6 +67,7 @@ function List() {
 
   return (
     <Container>
+      <h1>Anime Collections</h1>
       <WrapperCard>
         <NewCollectionCard onClick={() => setShowPopUpCreate(true)} />
         {
@@ -75,6 +76,11 @@ function List() {
           data?.itemsCollectionList.map((item, index) => (
             <ExistCollectionCard
               key={item.id}
+              onRedirect={() => dispatch({
+                type: 'loadCollectionDetail',
+                itemsCollectionDetail: item.animes,
+                collectionName: item.collectionName
+              })}
               to={`/collection/detail/${item.id}`}
               onRemove={() => handleRemoveCollection({ idCollection: item.id })}
               onEdit={() => {

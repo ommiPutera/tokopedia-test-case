@@ -1,9 +1,15 @@
 import styled from '@emotion/styled'
+import RemoveCollectionBtn from '../Button/RemoveCollectionBtn';
 
-function AnimeCard({ item: { title, coverImage, episodes } }) {
+function AnimeCard({ item: { title, coverImage }, withRemoveBtn, onRemove }) {
   return (
     <Container>
       <img src={coverImage?.large || '/assets/no_image_available.png'} alt='' />
+      {
+        withRemoveBtn
+        &&
+        <RemoveCollectionBtn widthFull onClick={onRemove} />
+      }
       <AnimeTitle>
         <p>{`${title.english || 'Title not found...'}`}</p>
       </AnimeTitle>

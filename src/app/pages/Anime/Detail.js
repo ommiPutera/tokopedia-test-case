@@ -18,6 +18,7 @@ function Detail() {
   } = useAnime();
 
   const {
+    data,
     dispatch: dispatchCollection
   } = useCollection();
 
@@ -57,7 +58,7 @@ function Detail() {
   return (
     <Container>
       {
-        detail
+        detail && data?.itemsDetail?.id.toString() === id
           ?
           <>
             <WrapperImage>

@@ -6,6 +6,7 @@ import EditCollectionBtn from '../Button/EditCollectionBtn';
 
 function ExistCollectionCard({
   to,
+  onRedirect,
   coverImage,
   onRemove,
   onEdit,
@@ -17,7 +18,7 @@ function ExistCollectionCard({
   onClick
 }) {
   return (
-    <Container>
+    <Container onClick={onRedirect}>
       <Link to={to || ''} className="link">
         <WrapperCard onClick={!disabled ? onClick : null} style={{ border: disabled && '1px solid #0a9400' }}>
           {
