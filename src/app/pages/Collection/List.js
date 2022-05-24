@@ -1,12 +1,9 @@
 import React from 'react';
 import { useCollection } from '../../../contexts/CollectionContext';
 import styled from '@emotion/styled';
-import { Link } from "react-router-dom";
-import CollectionCard from "../../components/Card/CollectionCard";
-import LoadingCard from "../../components/skeleton/LoadingCard";
 import ExistCollectionCard from '../../components/Card/ExistCollectionCard';
 import NewCollectionCard from '../../components/Card/NewCollectionCard';
-import RemoveBtn from '../../components/Button/RemoveBtn';
+import PopUpRemoveCollection from '../shared/PopUpRemoveCollection';
 
 function List() {
   const {
@@ -14,10 +11,25 @@ function List() {
     dispatch
   } = useCollection();
   const [showPopUpForm, setShowPopUpForm] = React.useState(false)
+  const [showPopUpConfirmation, setShowPopUpConfirmation] = React.useState(false)
 
   React.useEffect(() => {
-    console.log(data)
+    // console.log(data)
   }, [])
+
+  const handleRemoveCollection = ({ idCollection }) => {
+    for (let i = 0; i < data?.itemsCollectionList.length; i++) {
+      if (data?.itemsCollectionList[i].id === idCollection) {
+        setShowPopUpConfirmation(true)
+        const arrList = [...data.itemsCollectionList]
+        arrList.splice(i, 1)
+        const items = [...arrList]
+        console.log(items)
+        // localStorage.setItem('itemsCollectionList', JSON.stringify(items));
+        // dispatch({ type: 'removeCollection', itemsCollectionList: [...items] })
+      }
+    }
+  }
 
   return (
     <Container>
@@ -27,18 +39,22 @@ function List() {
           data?.itemsCollectionList
           &&
           data?.itemsCollectionList.map((item, index) => (
-            <Link to={`/collection/detail/${item.id}`} key={item.id} className="link">
-              <ExistCollectionCard
-                coverImage={item?.animes[0]?.coverImage.medium}
-                title={item.collectionName}
-                amount={item.animes.length}
-              />
-              <RemoveBtn>Test</RemoveBtn>
-            </Link>
+            <ExistCollectionCard
+              item={item}
+              to={`/collection/detail/${item.id}`}
+              onRemove={() => handleRemoveCollection({ idCollection: item.id })}
+              coverImage={item?.animes[0]?.coverImage.medium}
+              title={item.collectionName}
+              amount={item.animes.length}
+              withRemoveBtn
+            />
           ))
         }
       </WrapperCard>
-
+      <PopUpRemoveCollection
+        showPopUpConfirmation={showPopUpConfirmation}
+        setShowPopUpConfirmation={setShowPopUpConfirmation}
+      />
       {
         showPopUpForm
         &&

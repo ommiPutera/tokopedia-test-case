@@ -16,6 +16,12 @@ function collectionReducer(state, action) {
         itemsCollectionList: action.itemsCollectionList
       }
     }
+    case 'removeCollection': {
+      return {
+        ...state,
+        itemsCollectionList: action.itemsCollectionList
+      }
+    }
     case 'createCollection': {
       return {
         ...state,

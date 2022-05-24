@@ -1,18 +1,27 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { Link } from "react-router-dom";
+import RemoveCollectionBtn from '../Button/RemoveCollectionBtn'
 
-function ExistCollectionCard({ coverImage, disabled, title, amount, onClick }) {
+function ExistCollectionCard({ coverImage, item, to, onRemove, disabled, title, amount, withRemoveBtn, onClick }) {
   return (
     <Container>
-      <WrapperCard onClick={!disabled ? onClick : null} style={{ border: disabled && '1px solid #0a9400' }}>
-        {
-          coverImage
-            ?
-            <img src={coverImage} alt='' style={{ opacity: disabled ? '.4' : '1' }} />
-            :
-            <p>No collection yet </p>
-        }
-      </WrapperCard>
+      <Link to={to || ''} className="link">
+        <WrapperCard onClick={!disabled ? onClick : null} style={{ border: disabled && '1px solid #0a9400' }}>
+          {
+            coverImage
+              ?
+              <img src={coverImage} alt='' style={{ opacity: disabled ? '.4' : '1' }} />
+              :
+              <p>No collection yet </p>
+          }
+        </WrapperCard>
+      </Link>
+      {
+        withRemoveBtn
+        &&
+        <RemoveCollectionBtn onClick={onRemove} />
+      }
       <Title>{title}</Title>
       <Amount>{amount}</Amount>
     </Container>
@@ -21,6 +30,7 @@ function ExistCollectionCard({ coverImage, disabled, title, amount, onClick }) {
 
 const Container = styled.div`
   display: block;
+  position: relative;
   margin: 0;
 `
 
@@ -59,7 +69,7 @@ const WrapperCard = styled.div`
     font-size: 11px;
     text-align: center;
     color: #636363;
-    margin: 0;
+    margin: 0 auto;
   }
 
   img {

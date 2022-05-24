@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import React from 'react'
 import PopUp from '../../components/PopUp/Basic'
 import { useCollection } from '../../../contexts/CollectionContext';
+import { generateUniqueId } from '../../../utils/generateUniqueId';
 
 function PopUpInputCollection({ showPopUpForm, setShowPopUpForm }) {
   const titleInputRef = React.useRef(null);
@@ -40,7 +41,7 @@ function PopUpInputCollection({ showPopUpForm, setShowPopUpForm }) {
   const handleSubmit = (e) => {
     setShowPopUpForm(false)
     const data = {
-      id: Math.random(),
+      id: generateUniqueId(),
       collectionName: inputs.collectionName,
       animes: []
     }
