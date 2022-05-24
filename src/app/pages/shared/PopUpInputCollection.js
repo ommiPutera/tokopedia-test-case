@@ -128,7 +128,7 @@ const Content = styled.div`
 
 const CreateButton = styled.button(props => ({
   width: '100%',
-  padding: '12px 0',
+  padding: '16px 0',
   border: 'none',
   outline: 'none',
   backgroundColor: 'red',
@@ -139,7 +139,7 @@ const CreateButton = styled.button(props => ({
 
 const CloseButton = styled.button`
   width: 100%;
-  padding: 12px 0;
+  padding: 16px 0;
   border: none;
   outline: none;
   background-color: #2e2e2e;

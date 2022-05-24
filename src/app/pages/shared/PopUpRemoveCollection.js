@@ -7,7 +7,7 @@ function PopUpRemoveCollection({ onClick, showPopUpConfirmation, setShowPopUpCon
     <PopUp
       zIndex="12"
       zIndexBackdrop="11"
-      top='20%'
+      top='30%'
       botom='50%'
       in={showPopUpConfirmation}
       onClose={() => {
@@ -25,7 +25,6 @@ function PopUpRemoveCollection({ onClick, showPopUpConfirmation, setShowPopUpCon
           <Footer>
             <CloseButton onClick={() => setShowPopUpConfirmation(false)}>Close</CloseButton>
             <RemoveButton
-              type="button"
               onClick={onClick}
             >
               Yes, Remove
@@ -80,7 +79,7 @@ const Body = styled.div`
 
 const RemoveButton = styled.button(props => ({
   width: '100%',
-  padding: '12px 0',
+  padding: '16px 0',
   border: 'none',
   outline: 'none',
   backgroundColor: 'red',
@@ -91,7 +90,7 @@ const RemoveButton = styled.button(props => ({
 
 const CloseButton = styled.button`
   width: 100%;
-  padding: 12px 0;
+  padding: 16px 0;
   border: none;
   outline: none;
   background-color: #2e2e2e;

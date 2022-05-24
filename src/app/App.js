@@ -3,6 +3,7 @@ import AnimeList from "./pages/Anime/List";
 import CollectionList from "./pages/Collection/List";
 import CollectionDetail from "./pages/Collection/Detail";
 import AnimeDetail from "./pages/Anime/Detail";
+import SnackbarProvider from 'react-simple-snackbar'
 import AnimeContextProvider from "../contexts/AnimeContext";
 import CollectionContextProvider from "../contexts/CollectionContext";
 import {
@@ -14,18 +15,20 @@ import {
 function App() {
   return (
     <Router>
-      <Layout>
-        <AnimeContextProvider>
-          <CollectionContextProvider>
-            <Routes>
-              <Route path='/' element={<AnimeList />} />
-              <Route path='/detail/:id' exact element={<AnimeDetail />} />
-              <Route path='/collection/list' element={<CollectionList />} />
-              <Route path='/collection/detail/:id' element={<CollectionDetail />} />
-            </Routes>
-          </CollectionContextProvider>
-        </AnimeContextProvider>
-      </Layout>
+      <AnimeContextProvider>
+        <CollectionContextProvider>
+          <SnackbarProvider>
+            <Layout>
+              <Routes>
+                <Route path='/' element={<AnimeList />} />
+                <Route path='/detail/:id' exact element={<AnimeDetail />} />
+                <Route path='/collection/list' element={<CollectionList />} />
+                <Route path='/collection/detail/:id' element={<CollectionDetail />} />
+              </Routes>
+            </Layout>
+          </SnackbarProvider>
+        </CollectionContextProvider>
+      </AnimeContextProvider>
     </Router>
   );
 }

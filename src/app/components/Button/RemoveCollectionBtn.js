@@ -5,7 +5,7 @@ import { TrashIcon } from '@heroicons/react/solid';
 function RemoveCollectionBtn({ onClick }) {
   return (
     <Button onClick={onClick}>
-      <TrashIcon style={{ width: '14px', height: "14px", color: '#fff' }} />
+      <TrashIcon style={{ width: '12px', height: "12px", color: '#fff' }} />
     </Button>
   )
 }
@@ -14,9 +14,9 @@ const Button = styled.button`
   position: absolute;
   border: 1.5px solid rgba(46, 46, 46, 0.2);
   outline: none;
-  background-color: red;
-  width: 28px;
-  height: 28px;
+  background-color: #cc0000;
+  width: 25px;
+  height: 25px;
   padding: 5px 0;
   border-radius: 5px;
   font-size: 12px;

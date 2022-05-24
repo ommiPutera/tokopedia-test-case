@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import React from 'react'
+import { useSnackbar } from 'react-simple-snackbar'
 import LoadingIcon from '../../../assets/LoadingIcon';
 import { useCollection } from '../../../contexts/CollectionContext';
 import ExistCollectionCard from '../../components/Card/ExistCollectionCard';
@@ -8,26 +9,36 @@ import NewCollectionCard from '../../components/Card/NewCollectionCard';
 function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) {
   const [showPopUpForm, setShowPopUpForm] = React.useState(false)
   const [isSuccess, setIsSuccess] = React.useState(false)
+  const [openSnackbar] = useSnackbar({
+    position: 'bottom-center',
+    style: {
+      backgroundColor: '#0a9400',
+      marginBottom: '50px'
+    }
+  })
 
   const {
     data,
-    dispatch,
   } = useCollection();
 
-  const onInsertToCollection = ({ idCollection }) => {
-    for (let i = 0; i < data?.itemsCollectionList.length; i++) {
-      if (data?.itemsCollectionList[i].id === idCollection) {
-        const items = [...data?.itemsCollectionList]
-        items[i].animes = [...data?.itemsCollectionList[i].animes, data?.itemsDetail]
-        localStorage.setItem('itemsCollectionList', JSON.stringify(items));
-        dispatch({ type: 'insertIntoCollections', itemsCollectionList: [...items] })
-        setIsSuccess(true)
-      }
-    }
+  const onInsertToCollection = ({ idCollection, collectionName }) => {
+    console.log('here')
+    setShowPopUp(false)
+    // for (let i = 0; i < data?.itemsCollectionList.length; i++) {
+    //   if (data?.itemsCollectionList[i].id === idCollection) {
+    //     const items = [...data?.itemsCollectionList]
+    //     items[i].animes = [...data?.itemsCollectionList[i].animes, data?.itemsDetail]
+    //     localStorage.setItem('itemsCollectionList', JSON.stringify(items));
+    //     dispatch({ type: 'insertIntoCollections', itemsCollectionList: [...items] })
+    //     setIsSuccess(true)
+    //   }
+    // }
 
     setTimeout(() => {
       setIsSuccess(false)
-    }, 1000)
+      setCreateCollection(false)
+      openSnackbar(`Anime has been added to ${collectionName} collection.`)
+    }, 200)
   }
 
   return (
@@ -47,7 +58,8 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
                   coverImage={item?.animes[0]?.coverImage?.medium || ''}
                   idCollection={item.id}
                   amount={item.animes.length}
-                  onClick={() => onInsertToCollection({ idCollection: item.id })}
+                  onClick={() => onInsertToCollection({ idCollection: item.id, collectionName: item.collectionName })}
+                  collectionName={item.collectionName}
                   title={item.collectionName}
                 />
               ))

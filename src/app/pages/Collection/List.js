@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import ExistCollectionCard from '../../components/Card/ExistCollectionCard';
 import NewCollectionCard from '../../components/Card/NewCollectionCard';
 import PopUpRemoveCollection from '../shared/PopUpRemoveCollection';
+import { useSnackbar } from 'react-simple-snackbar'
 
 function List() {
   const {
@@ -14,14 +15,21 @@ function List() {
   const [agreeToRemove, setAgreeToRemove] = React.useState(false)
   const [items, setItems] = React.useState([])
   const [showPopUpConfirmation, setShowPopUpConfirmation] = React.useState(false)
+  const [openSnackbar] = useSnackbar({
+    style: {
+      backgroundColor: "red"
+    }
+  })
 
-  React.useEffect(() => {
+  const removeCollection = () => {
     if (agreeToRemove && items) {
       localStorage.setItem('itemsCollectionList', JSON.stringify(items));
       dispatch({ type: 'removeCollection', itemsCollectionList: [...items] })
       setShowPopUpConfirmation(false)
+      openSnackbar('Collection has been deleted successfully.')
     }
-  }, [dispatch, agreeToRemove, items])
+    return;
+  }
 
   const handleRemoveCollection = ({ idCollection }) => {
     for (let i = 0; i < data?.itemsCollectionList.length; i++) {
@@ -34,6 +42,10 @@ function List() {
       }
     }
   }
+
+  React.useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <Container>
@@ -56,7 +68,10 @@ function List() {
         }
       </WrapperCard>
       <PopUpRemoveCollection
-        onClick={() => setAgreeToRemove(true)}
+        onClick={() => {
+          setAgreeToRemove(true)
+          removeCollection()
+        }}
         showPopUpConfirmation={showPopUpConfirmation}
         setShowPopUpConfirmation={setShowPopUpConfirmation}
       />
