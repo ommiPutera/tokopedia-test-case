@@ -6,12 +6,14 @@ import CollectionCard from "../../components/Card/CollectionCard";
 import LoadingCard from "../../components/skeleton/LoadingCard";
 import ExistCollectionCard from '../../components/Card/ExistCollectionCard';
 import NewCollectionCard from '../../components/Card/NewCollectionCard';
+import RemoveBtn from '../../components/Button/RemoveBtn';
 
-function List({ setShowPopUpForm }) {
+function List() {
   const {
     data,
     dispatch
   } = useCollection();
+  const [showPopUpForm, setShowPopUpForm] = React.useState(false)
 
   React.useEffect(() => {
     console.log(data)
@@ -23,19 +25,29 @@ function List({ setShowPopUpForm }) {
         <NewCollectionCard onClick={() => setShowPopUpForm(true)} />
         {
           data?.itemsCollectionList
-            ?
-            data?.itemsCollectionList.map((item, index) => (
-              <Link to={`/detail/${item.id}`} key={item.id} className="link">
-                <ExistCollectionCard
-                  coverImage={item?.animes[0]?.coverImage.medium}
-                  title={item.collectionName}
-                  amount={item.animes.length}
-                />
-              </Link>
-            ))
-            : <LoadingCard count={10} />
+          &&
+          data?.itemsCollectionList.map((item, index) => (
+            <Link to={`/collection/detail/${item.id}`} key={item.id} className="link">
+              <ExistCollectionCard
+                coverImage={item?.animes[0]?.coverImage.medium}
+                title={item.collectionName}
+                amount={item.animes.length}
+              />
+              <RemoveBtn>Test</RemoveBtn>
+            </Link>
+          ))
         }
       </WrapperCard>
+
+      {
+        showPopUpForm
+        &&
+        <NewCollectionCard
+          onCreate
+          showPopUpForm={showPopUpForm}
+          setShowPopUpForm={setShowPopUpForm}
+        />
+      }
     </Container>
   )
 }
@@ -54,7 +66,7 @@ const WrapperCard = styled.div`
   column-gap: 12px;
   row-gap: 30px;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin: 0 20px;
+  margin: 0 10px;
   
   & p {
     margin: 0 0 30px 0 ;
