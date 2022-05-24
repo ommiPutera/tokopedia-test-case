@@ -4,7 +4,6 @@ import PopUpInputCollection from '../../pages/shared/PopUpInputCollection';
 
 function NewCollectionCard({
   onClick,
-  setShowPopUp,
   showPopUpForm,
   setShowPopUpForm,
   onCreate
@@ -26,7 +25,6 @@ function NewCollectionCard({
         onCreate
         &&
         <PopUpInputCollection
-          setShowPopUp={setShowPopUp}
           showPopUpForm={showPopUpForm}
           setShowPopUpForm={setShowPopUpForm}
         />

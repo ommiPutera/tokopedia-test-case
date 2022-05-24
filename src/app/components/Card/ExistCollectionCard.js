@@ -2,8 +2,20 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { Link } from "react-router-dom";
 import RemoveCollectionBtn from '../Button/RemoveCollectionBtn'
+import EditCollectionBtn from '../Button/EditCollectionBtn';
 
-function ExistCollectionCard({ coverImage, item, to, onRemove, disabled, title, amount, withRemoveBtn, onClick }) {
+function ExistCollectionCard({
+  to,
+  coverImage,
+  onRemove,
+  onEdit,
+  disabled,
+  title,
+  amount,
+  withRemoveBtn,
+  withEditBtn,
+  onClick
+}) {
   return (
     <Container>
       <Link to={to || ''} className="link">
@@ -17,13 +29,22 @@ function ExistCollectionCard({ coverImage, item, to, onRemove, disabled, title, 
           }
         </WrapperCard>
       </Link>
-      {
-        withRemoveBtn
-        &&
-        <RemoveCollectionBtn onClick={onRemove} />
-      }
-      <Title>{title}</Title>
-      <Amount>{amount}</Amount>
+      <WrapperAction>
+        {
+          withEditBtn
+          &&
+          <EditCollectionBtn onClick={onEdit} />
+        }
+        {
+          withRemoveBtn
+          &&
+          <RemoveCollectionBtn onClick={onRemove} />
+        }
+      </WrapperAction>
+      <WrapperInfo>
+        <Title>{title}</Title>
+        <Amount>{amount}</Amount>
+      </WrapperInfo>
     </Container>
   )
 }
@@ -31,6 +52,7 @@ function ExistCollectionCard({ coverImage, item, to, onRemove, disabled, title, 
 const Container = styled.div`
   display: block;
   position: relative;
+  padding: 0;
   margin: 0;
 `
 
@@ -38,7 +60,7 @@ const Title = styled.p`
   text-align: left;
   color: #fff;
   line-height: 1.1em !important;
-  padding: 10px 6px 0 6px !important;
+  padding: 8px 6px 0 6px !important;
   margin: 0 !important;
   font-size: 12px !important;
   z-index: 5;
@@ -52,6 +74,16 @@ const Amount = styled.p`
   margin: 0 !important;
   font-size: 12px !important;
   z-index: 5;
+`
+
+const WrapperAction = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`
+
+const WrapperInfo = styled.div`
+  position: relative;
 `
 
 const WrapperCard = styled.div`
@@ -74,7 +106,7 @@ const WrapperCard = styled.div`
 
   img {
     height: 105px;
-    width: 105px;
+    width: 100%;
     object-fit: cover;
     border-radius: 15px;
   }
@@ -91,7 +123,7 @@ const WrapperCard = styled.div`
 
   @media (max-width: 768px) {
     height: 105px;
-    width: 105px;
+    width: 100%;
 
     ::after {
       background: rgb(24,24,24);

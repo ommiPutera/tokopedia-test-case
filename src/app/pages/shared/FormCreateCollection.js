@@ -19,26 +19,26 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
 
   const {
     data,
+    dispatch
   } = useCollection();
 
   const onInsertToCollection = ({ idCollection, collectionName }) => {
-    console.log('here')
-    setShowPopUp(false)
-    // for (let i = 0; i < data?.itemsCollectionList.length; i++) {
-    //   if (data?.itemsCollectionList[i].id === idCollection) {
-    //     const items = [...data?.itemsCollectionList]
-    //     items[i].animes = [...data?.itemsCollectionList[i].animes, data?.itemsDetail]
-    //     localStorage.setItem('itemsCollectionList', JSON.stringify(items));
-    //     dispatch({ type: 'insertIntoCollections', itemsCollectionList: [...items] })
-    //     setIsSuccess(true)
-    //   }
-    // }
+    for (let i = 0; i < data?.itemsCollectionList.length; i++) {
+      if (data?.itemsCollectionList[i].id === idCollection) {
+        const items = [...data?.itemsCollectionList]
+        items[i].animes = [...data?.itemsCollectionList[i].animes, data?.itemsDetail]
+        localStorage.setItem('itemsCollectionList', JSON.stringify(items));
+        dispatch({ type: 'insertIntoCollections', itemsCollectionList: [...items] })
+        setIsSuccess(true)
+      }
+    }
 
     setTimeout(() => {
       setIsSuccess(false)
+      setShowPopUp(false)
       setCreateCollection(false)
       openSnackbar(`Anime has been added to ${collectionName} collection.`)
-    }, 200)
+    }, 300)
   }
 
   return (
@@ -70,7 +70,6 @@ function FormCreateCollection({ showPopUp, setShowPopUp, setCreateCollection }) 
               &&
               <NewCollectionCard
                 onCreate
-                showPopUp={showPopUp}
                 setShowPopUp={setShowPopUp}
                 showPopUpForm={showPopUpForm}
                 setShowPopUpForm={setShowPopUpForm}

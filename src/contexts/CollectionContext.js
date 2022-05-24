@@ -22,6 +22,12 @@ function collectionReducer(state, action) {
         itemsCollectionList: action.itemsCollectionList
       }
     }
+    case 'editCollection': {
+      return {
+        ...state,
+        itemsCollectionList: action.itemsCollectionList
+      }
+    }
     case 'createCollection': {
       return {
         ...state,
@@ -37,7 +43,7 @@ function collectionReducer(state, action) {
 const CollectionProvider = (props) => {
   const [data, dispatch] = React.useReducer(collectionReducer, {
     itemsCollectionList: null,
-    itemsDetail: null
+    itemsDetail: null,
   }, () => {
     const localData = localStorage.getItem('itemsCollectionList');
     return localData ? JSON.parse(localData) : [];

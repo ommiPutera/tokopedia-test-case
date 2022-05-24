@@ -49,7 +49,7 @@ const Desc = styled.div`
   }
 `
 
-const Information = styled.p`
+const Information = styled.div`
   font-size: 14px;
   letter-spacing: normal;
   color: #91999f;

@@ -4,7 +4,14 @@ import PopUp from '../../components/PopUp/Basic'
 import { useCollection } from '../../../contexts/CollectionContext';
 import { generateUniqueId } from '../../../utils/generateUniqueId';
 
-function PopUpInputCollection({ showPopUpForm, setShowPopUpForm }) {
+function PopUpInputCollection({
+  propsEdit,
+  onSubmbit,
+  editAction,
+  initialValue,
+  showPopUpForm,
+  setShowPopUpForm,
+}) {
   const titleInputRef = React.useRef(null);
   const [isValidTitle, setIsValidTitle] = React.useState(null)
   const [isNotUniqueTitle, setIsNotUniqueTitle] = React.useState(null)
@@ -19,8 +26,11 @@ function PopUpInputCollection({ showPopUpForm, setShowPopUpForm }) {
   } = useCollection();
 
   React.useEffect(() => {
-    titleInputRef.current.focus();
-  }, []);
+    if (initialValue) {
+      setInputs({ collectionName: initialValue.collectionName })
+    }
+    titleInputRef?.current?.focus();
+  }, [initialValue]);
 
   React.useEffect(() => {
     for (let i = 0; i < data?.itemsCollectionList?.length; i++) {
@@ -39,19 +49,23 @@ function PopUpInputCollection({ showPopUpForm, setShowPopUpForm }) {
   }
 
   const handleSubmit = (e) => {
-    setShowPopUpForm(false)
-    const data = {
-      id: generateUniqueId(),
-      collectionName: inputs.collectionName,
-      animes: []
-    }
+    if (editAction) {
+      onSubmbit({ collectionName: inputs.collectionName })
+    } else {
+      setShowPopUpForm(false)
+      const data = {
+        id: generateUniqueId(),
+        collectionName: inputs.collectionName,
+        animes: []
+      }
 
-    let itemsLocalStorage = localStorage.getItem('itemsCollectionList')
-    let localData = itemsLocalStorage ? JSON.parse(itemsLocalStorage) : []
-    dispatchCollection({
-      type: 'createCollection',
-      itemsCollectionList: [...localData?.itemsCollectionList || [], data]
-    })
+      let itemsLocalStorage = localStorage.getItem('itemsCollectionList')
+      let localData = itemsLocalStorage ? JSON.parse(itemsLocalStorage) : []
+      dispatchCollection({
+        type: 'createCollection',
+        itemsCollectionList: [...localData?.itemsCollectionList || [], data]
+      })
+    }
     setInputs({
       collectionName: "",
     })
@@ -64,40 +78,36 @@ function PopUpInputCollection({ showPopUpForm, setShowPopUpForm }) {
       top='20%'
       botom='50%'
       in={showPopUpForm}
-      onClose={() => {
-        setShowPopUpForm(false)
-      }}
+      onClose={() => setShowPopUpForm(false)}
     >
       <Container height={!isValidTitle || isNotUniqueTitle ? "210px" : "190px"}>
         <Content>
           <Head>
-            <h4>Create New Collection</h4>
-            <p>Input title for this collection</p>
+            <h4>{propsEdit?.popUptitle || "Create New Collection"}</h4>
+            <p>{propsEdit?.popUpSubtitle || "Input title for this collection"}</p>
           </Head>
-          <form>
-            <Body>
-              <InputTitleCollection
-                ref={titleInputRef}
-                type="text"
-                name="collectionName"
-                placeholder='Title'
-                value={inputs.collectionName}
-                onChange={handleChange}
-              />
-              <p>{!isValidTitle && '- Only title without special characters are allowed.'}</p>
-              <p>{isNotUniqueTitle && '- There is already a collection with this name.'}</p>
-            </Body>
-            <Footer>
-              <CloseButton onClick={() => setShowPopUpForm(false)}>Close</CloseButton>
-              <CreateButton
-                type="submit"
-                disabled={!inputs.collectionName || !isValidTitle || isNotUniqueTitle}
-                onClick={handleSubmit}
-              >
-                Create
-              </CreateButton>
-            </Footer>
-          </form>
+          <Body>
+            <InputTitleCollection
+              ref={titleInputRef}
+              type="text"
+              name="collectionName"
+              placeholder='Title'
+              value={inputs.collectionName}
+              onChange={handleChange}
+            />
+            <p>{!isValidTitle && '- Only title without special characters are allowed.'}</p>
+            <p>{isNotUniqueTitle && '- There is already a collection with this name.'}</p>
+          </Body>
+          <Footer>
+            <CloseButton onClick={() => setShowPopUpForm(false)}>Close</CloseButton>
+            <CreateButton
+              type="submit"
+              disabled={!inputs.collectionName || !isValidTitle || isNotUniqueTitle}
+              onClick={handleSubmit}
+            >
+              {propsEdit?.btn || "Create"}
+            </CreateButton>
+          </Footer>
         </Content>
       </Container>
     </PopUp>
