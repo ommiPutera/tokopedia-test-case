@@ -5,13 +5,11 @@ import { useCollection } from '../../../contexts/CollectionContext';
 
 function CollectionInfo({ exsitInCollection, to }) {
   const {
-    data,
     dispatch
   } = useCollection();
 
 
   React.useEffect(() => {
-    console.log(exsitInCollection);
     dispatch({
       type: 'loadCollectionDetail',
       itemsCollectionDetail: exsitInCollection?.animes,

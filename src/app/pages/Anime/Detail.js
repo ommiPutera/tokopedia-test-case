@@ -31,7 +31,7 @@ function Detail() {
   const getExsitInCollection = React.useCallback(() => {
     const bulkCollection = []
     for (let i = 0; i < data?.itemsCollectionList?.length; i++) {
-      for (let j = 0; j < data?.itemsCollectionList[i]?.animes?.length; i++) {
+      for (let j = 0; j < data?.itemsCollectionList[i]?.animes?.length; j++) {
         if (data?.itemsCollectionList[i]?.animes[j].id.toString() === id) {
           const dataCollection = {
             collectionName: data?.itemsCollectionList[i].collectionName,

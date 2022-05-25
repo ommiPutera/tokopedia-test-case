@@ -14,7 +14,7 @@ function AnimeCard({ item: { id, title, coverImage }, to, withRemoveBtn, onRemov
         <RemoveCollectionBtn widthFull onClick={onRemove} />
       }
       <AnimeTitle>
-        <p>{`${title.english || 'Title not found...'}`}</p>
+        <p>{`${title?.english || 'Title not found...'}`}</p>
       </AnimeTitle>
     </Container>
   )

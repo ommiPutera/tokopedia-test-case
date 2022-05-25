@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import React from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { useSnackbar } from 'react-simple-snackbar';
+import LoadingIcon from '../../../assets/LoadingIcon';
 import { useCollection } from '../../../contexts/CollectionContext';
 import AnimeCard from '../../components/Card/AnimeCard';
 import PopUpRemoveCollection from '../shared/PopUpRemoveCollection';
@@ -13,6 +14,7 @@ function Detail() {
   } = useCollection();
 
   const [items, setItems] = React.useState([])
+  const [loading, setLoading] = React.useState(false)
   const [indexAnime, setIndexAnime] = React.useState(false)
   const [collectionLength, setCollectionLength] = React.useState([])
   const [itemsDetail, setItemsDetail] = React.useState([])
@@ -30,8 +32,8 @@ function Detail() {
   const removeAnime = () => {
     const arrList = [...data.itemsCollectionList]
     arrList[collectionLength].animes.splice(indexAnime, 1)
-    localStorage.setItem('collections', JSON.stringify(items));
-    dispatch({ type: 'removeAnime', itemsCollectionList: [...items], itemsCollectionDetail: [...itemsDetail] })
+    console.log(collectionLength, indexAnime)
+    dispatch({ type: 'removeAnime', itemsCollectionList: [...arrList], itemsCollectionDetail: [...itemsDetail] })
     setShowPopUpConfirmation(false)
     openSnackbar('Anime has been deleted successfully.')
   }
@@ -46,7 +48,7 @@ function Detail() {
         arrDetail.splice(indexAnime, 1)
         const itemsDetail = [...arrDetail]
         setIndexAnime(indexAnime)
-        setCollectionLength(indexAnime)
+        setCollectionLength(i)
         setItems(items)
         setItemsDetail(itemsDetail)
       }
@@ -56,6 +58,16 @@ function Detail() {
   React.useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  React.useEffect(() => {
+    const getItemsCollectionDetail = data?.itemsCollectionList.filter(item => item.id === idCollection)[0].animes
+    if (!data?.itemsCollectionDetail) {
+      setLoading(true)
+      console.log('here')
+      dispatch({ type: 'loadCollectionDetail', itemsCollectionDetail: getItemsCollectionDetail })
+    }
+    if (data?.itemsCollectionDetail) setLoading(false)
+  }, [data, dispatch, idCollection])
 
   return (
     <Container>
@@ -77,7 +89,7 @@ function Detail() {
         }
       </Wrapper>
       {
-        !data?.itemsCollectionDetail?.length
+        !data?.itemsCollectionDetail?.length && !loading
           ?
           <EmptyCollection>
             <h3>No anime yet in this collection ...</h3>
@@ -86,7 +98,14 @@ function Detail() {
               <p>Home - Anime Test Case</p>
             </Link>
           </EmptyCollection>
-          : null
+          :
+          !data?.itemsCollectionDetail?.length && loading
+            ?
+            <LoadingIcon />
+            : null
+
+
+
       }
 
       <PopUpRemoveCollection
