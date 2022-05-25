@@ -33,7 +33,11 @@ function Detail() {
     for (let i = 0; i < data?.itemsCollectionList?.length; i++) {
       for (let j = 0; j < data?.itemsCollectionList[i]?.animes?.length; i++) {
         if (data?.itemsCollectionList[i]?.animes[j].id.toString() === id) {
-          bulkCollection.push(data?.itemsCollectionList[i].collectionName)
+          const dataCollection = {
+            collectionName: data?.itemsCollectionList[i].collectionName,
+            id: data?.itemsCollectionList[i].id
+          }
+          bulkCollection.push(dataCollection)
         }
       }
     }
@@ -41,8 +45,6 @@ function Detail() {
   }, [data, id])
 
   const exsitInCollection = getExsitInCollection()
-
-  console.log(exsitInCollection)
 
   const load = React.useCallback(() => {
     function fetchData() {
@@ -54,7 +56,6 @@ function Detail() {
         .then(res => {
           dispatchAnime({ type: 'load', itemsDetail: res.data.Media })
           dispatchCollection({ type: 'load', itemsDetail: res.data.Media })
-          // dispatchCollection({ type: 'exsitCollection', exsitInCollection: exsitInCollection })
         })
         .catch((err) => {
           alert('Error, check console');
@@ -72,6 +73,8 @@ function Detail() {
     window.scrollTo(0, 0)
   }, [])
 
+  console.log(exsitInCollection)
+
   return (
     <Container>
       {
@@ -83,7 +86,16 @@ function Detail() {
             </WrapperImage>
             <WrapperInformation>
               <AnimeInfo detail={detail} />
-              <CollectionInfo exsitInCollection={exsitInCollection} />
+              {
+                exsitInCollection.length
+                  ?
+                  <WrapperCollectionInfo>
+                    <h4>This anime has been added to the following collections.</h4>
+                    <CollectionInfo exsitInCollection={exsitInCollection} />
+                  </WrapperCollectionInfo>
+                  :
+                  <h5>This anime hasn't been added to any collections yet.</h5>
+              }
             </WrapperInformation>
           </>
           : <LoadingIcon />
@@ -105,6 +117,25 @@ const Container = styled.div`
 
 const WrapperInformation = styled.div`
   position: relative;
+
+  & h5 {
+    margin: 30px 20px;
+    padding: 15px 20px;
+    font-weight: 500;
+    background-color: #0e86d4;
+    border-radius: 6px;
+    line-height: 1.2em;
+  }
+`
+
+const WrapperCollectionInfo = styled.div`
+  margin: 40px 20px;
+
+  & h4 {
+    margin: 0 0 20px 0;
+    border-radius: 6px;
+    line-height: 1.2em;
+  }
 `
 
 const WrapperImage = styled.div`

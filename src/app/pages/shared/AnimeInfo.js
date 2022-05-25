@@ -21,7 +21,7 @@ export default function AnimeInfo({ detail }) {
 }
 
 const WrapperInfo = styled.div`
-  margin: 10px 0;
+  margin: 10px 20px;
 `
 
 const Title = styled.h1`

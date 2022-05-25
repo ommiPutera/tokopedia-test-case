@@ -44,8 +44,6 @@ function Detail() {
         const arrDetail = [...data.itemsCollectionDetail]
         const indexAnime = arrList[i].animes.findIndex(val => val.id === idAnime)
         arrDetail.splice(indexAnime, 1)
-        // arrList[i].animes.splice(indexAnime, 1)
-        // const items = [...arrList]
         const itemsDetail = [...arrDetail]
         setIndexAnime(indexAnime)
         setCollectionLength(indexAnime)
@@ -64,7 +62,7 @@ function Detail() {
       <h1>{data?.collectionName}</h1>
       <Wrapper>
         {
-          data?.itemsCollectionDetail.length || itemsDetail
+          data?.itemsCollectionDetail
             ?
             data?.itemsCollectionDetail.map((item, index) => (
               <AnimeCard
@@ -79,7 +77,7 @@ function Detail() {
         }
       </Wrapper>
       {
-        !data.itemsCollectionDetail.length
+        !data?.itemsCollectionDetail?.length
           ?
           <EmptyCollection>
             <h3>No anime yet in this collection ...</h3>
