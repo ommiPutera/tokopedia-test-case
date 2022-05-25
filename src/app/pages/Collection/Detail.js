@@ -59,8 +59,8 @@ function Detail() {
   }, [])
 
   React.useEffect(() => {
-    const getItemsCollectionDetail = data?.itemsCollectionList.filter(item => item.id === idCollection)[0].animes
     if (!data?.itemsCollectionDetail) {
+      const getItemsCollectionDetail = data?.itemsCollectionList.filter(item => item.id === idCollection)[0].animes
       setLoading(true)
       dispatch({ type: 'loadCollectionDetail', itemsCollectionDetail: getItemsCollectionDetail })
     }
