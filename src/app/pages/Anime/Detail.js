@@ -28,6 +28,22 @@ function Detail() {
   let params = useParams();
   let id = params.id;
 
+  const getExsitInCollection = React.useCallback(() => {
+    const bulkCollection = []
+    for (let i = 0; i < data?.itemsCollectionList?.length; i++) {
+      for (let j = 0; j < data?.itemsCollectionList[i]?.animes?.length; i++) {
+        if (data?.itemsCollectionList[i]?.animes[j].id.toString() === id) {
+          bulkCollection.push(data?.itemsCollectionList[i].collectionName)
+        }
+      }
+    }
+    return bulkCollection
+  }, [data, id])
+
+  const exsitInCollection = getExsitInCollection()
+
+  console.log(exsitInCollection)
+
   const load = React.useCallback(() => {
     function fetchData() {
       animeApi
@@ -38,6 +54,7 @@ function Detail() {
         .then(res => {
           dispatchAnime({ type: 'load', itemsDetail: res.data.Media })
           dispatchCollection({ type: 'load', itemsDetail: res.data.Media })
+          // dispatchCollection({ type: 'exsitCollection', exsitInCollection: exsitInCollection })
         })
         .catch((err) => {
           alert('Error, check console');
@@ -66,7 +83,7 @@ function Detail() {
             </WrapperImage>
             <WrapperInformation>
               <AnimeInfo detail={detail} />
-              <CollectionInfo />
+              <CollectionInfo exsitInCollection={exsitInCollection} />
             </WrapperInformation>
           </>
           : <LoadingIcon />
@@ -88,7 +105,6 @@ const Container = styled.div`
 
 const WrapperInformation = styled.div`
   position: relative;
-  margin: 0 20px;
 `
 
 const WrapperImage = styled.div`

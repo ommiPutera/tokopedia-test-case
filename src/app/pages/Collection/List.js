@@ -27,7 +27,7 @@ function List() {
   })
 
   const removeCollection = () => {
-    localStorage.setItem('itemsCollectionList', JSON.stringify(items));
+    localStorage.setItem('collections', JSON.stringify(items));
     dispatch({ type: 'removeCollection', itemsCollectionList: [...items] })
     setShowPopUpConfirmation(false)
     openSnackbar('Collection has been deleted successfully.')
@@ -35,13 +35,12 @@ function List() {
 
   const handleEditCollection = ({ newCollectionName }) => {
     for (let i = 0; i < data?.itemsCollectionList.length; i++) {
-      console.log(idCollectiononEdit, newCollectionName)
       if (data?.itemsCollectionList[i].id === idCollectiononEdit) {
         setInitialValue(data.itemsCollectionList[i])
         const arrList = [...data.itemsCollectionList]
         arrList[i].collectionName = newCollectionName
         const newItems = [...arrList]
-        localStorage.setItem('itemsCollectionList', JSON.stringify(newItems));
+        localStorage.setItem('collections', JSON.stringify(newItems));
         setShowPopUpEdit(false)
         dispatch({ type: 'editCollection', itemsCollectionList: [...newItems] })
         openSnackbar('Collection has been edited successfully.')

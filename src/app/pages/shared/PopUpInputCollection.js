@@ -26,9 +26,6 @@ function PopUpInputCollection({
   } = useCollection();
 
   React.useEffect(() => {
-    if (initialValue) {
-      setInputs({ collectionName: initialValue.collectionName })
-    }
     titleInputRef?.current?.focus();
   }, [initialValue]);
 
@@ -59,7 +56,7 @@ function PopUpInputCollection({
         animes: []
       }
 
-      let itemsLocalStorage = localStorage.getItem('itemsCollectionList')
+      let itemsLocalStorage = localStorage.getItem('collections')
       let localData = itemsLocalStorage ? JSON.parse(itemsLocalStorage) : []
       dispatchCollection({
         type: 'createCollection',

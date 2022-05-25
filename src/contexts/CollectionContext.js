@@ -10,6 +10,12 @@ function collectionReducer(state, action) {
         itemsDetail: action.itemsDetail
       }
     }
+    case 'exsitCollection': {
+      return {
+        ...state,
+        exsitInCollection: action.exsitInCollection
+      }
+    }
     case 'insertIntoCollections': {
       return {
         ...state,
@@ -59,15 +65,16 @@ const CollectionProvider = (props) => {
     itemsCollectionList: null,
     itemsCollectionDetail: null,
     itemsDetail: null,
+    exsitInCollection: null,
     collectionName: '',
   }, () => {
-    const localData = localStorage.getItem('itemsCollectionList');
+    const localData = localStorage.getItem('collections');
     return localData ? JSON.parse(localData) : [];
   })
 
   React.useEffect(() => {
     if (data?.itemsCollectionList) {
-      localStorage.setItem('itemsCollectionList', JSON.stringify(data));
+      localStorage.setItem('collections', JSON.stringify(data));
     }
   }, [data]);
 

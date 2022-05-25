@@ -20,7 +20,7 @@ function List() {
     function fetchData() {
       animeApi
         .get(queryAnimeList, {
-          page: page,
+          page: localStorage.getItem('page') || 1,
           perPage: 10
         })
         .then(handleResponse)

@@ -13,6 +13,8 @@ function Detail() {
   } = useCollection();
 
   const [items, setItems] = React.useState([])
+  const [indexAnime, setIndexAnime] = React.useState(false)
+  const [collectionLength, setCollectionLength] = React.useState([])
   const [itemsDetail, setItemsDetail] = React.useState([])
   const [agreeToRemove, setAgreeToRemove] = React.useState(false)
   const [showPopUpConfirmation, setShowPopUpConfirmation] = React.useState(false)
@@ -23,11 +25,12 @@ function Detail() {
   })
 
   let params = useParams();
-  let id = params.id;
+  let idCollection = params.id;
 
   const removeAnime = () => {
-    localStorage.setItem('itemsCollectionList', JSON.stringify(items));
-    localStorage.setItem('itemsCollectionDetail', JSON.stringify(items));
+    const arrList = [...data.itemsCollectionList]
+    arrList[collectionLength].animes.splice(indexAnime, 1)
+    localStorage.setItem('collections', JSON.stringify(items));
     dispatch({ type: 'removeAnime', itemsCollectionList: [...items], itemsCollectionDetail: [...itemsDetail] })
     setShowPopUpConfirmation(false)
     openSnackbar('Anime has been deleted successfully.')
@@ -35,15 +38,17 @@ function Detail() {
 
   const handleRemoveAnime = ({ idAnime }) => {
     for (let i = 0; i < data?.itemsCollectionList.length; i++) {
-      if (data?.itemsCollectionList[i].id === id) {
+      if (data?.itemsCollectionList[i].id === idCollection) {
         setShowPopUpConfirmation(true)
         const arrList = [...data.itemsCollectionList]
         const arrDetail = [...data.itemsCollectionDetail]
         const indexAnime = arrList[i].animes.findIndex(val => val.id === idAnime)
-        arrList[i].animes.splice(indexAnime, 1)
         arrDetail.splice(indexAnime, 1)
-        const items = [...arrList]
+        // arrList[i].animes.splice(indexAnime, 1)
+        // const items = [...arrList]
         const itemsDetail = [...arrDetail]
+        setIndexAnime(indexAnime)
+        setCollectionLength(indexAnime)
         setItems(items)
         setItemsDetail(itemsDetail)
       }
@@ -59,25 +64,26 @@ function Detail() {
       <h1>{data?.collectionName}</h1>
       <Wrapper>
         {
-          data.itemsCollectionDetail
-          &&
-          data.itemsCollectionDetail.map((item, index) => (
-            <AnimeCard
-              withRemoveBtn
-              onRemove={() => handleRemoveAnime({ idAnime: item.id })}
-              to={`/detail/${item.id}`}
-              key={item.id}
-              item={item}
-            />
-          ))
+          data?.itemsCollectionDetail.length || itemsDetail
+            ?
+            data?.itemsCollectionDetail.map((item, index) => (
+              <AnimeCard
+                withRemoveBtn
+                onRemove={() => handleRemoveAnime({ idAnime: item.id })}
+                to={`/detail/${item.id}`}
+                key={item.id}
+                item={item}
+              />
+            ))
+            : null
         }
       </Wrapper>
       {
         !data.itemsCollectionDetail.length
           ?
           <EmptyCollection>
-            <h3>No collection yet ...</h3>
-            <p>Looks like you already have a collection, so let's add your favorite anime to the collection!</p>
+            <h3>No anime yet in this collection ...</h3>
+            <p>Let's add your favorite anime to this collection!</p>
             <Link to='/' className="link">
               <p>Home - Anime Test Case</p>
             </Link>
@@ -89,7 +95,7 @@ function Detail() {
         message={`Are you sure you want to delete this anime from ${data?.collectionName} collection ?`}
         onClick={() => {
           setAgreeToRemove(true)
-          if (agreeToRemove && items) removeAnime()
+          if (agreeToRemove && itemsDetail && items) removeAnime()
         }}
         showPopUpConfirmation={showPopUpConfirmation}
         setShowPopUpConfirmation={setShowPopUpConfirmation}

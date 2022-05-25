@@ -27,7 +27,7 @@ function FormCreateCollection({ setShowPopUp, setCreateCollection }) {
       if (data?.itemsCollectionList[i].id === idCollection) {
         const items = [...data?.itemsCollectionList]
         items[i].animes = [...data?.itemsCollectionList[i].animes, data?.itemsDetail]
-        localStorage.setItem('itemsCollectionList', JSON.stringify(items));
+        localStorage.setItem('collections', JSON.stringify(items));
         dispatch({ type: 'insertIntoCollections', itemsCollectionList: [...items] })
         setIsSuccess(true)
       }
