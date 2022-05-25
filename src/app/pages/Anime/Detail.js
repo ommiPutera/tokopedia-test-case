@@ -35,7 +35,8 @@ function Detail() {
         if (data?.itemsCollectionList[i]?.animes[j].id.toString() === id) {
           const dataCollection = {
             collectionName: data?.itemsCollectionList[i].collectionName,
-            id: data?.itemsCollectionList[i].id
+            id: data?.itemsCollectionList[i].id,
+            animes: data?.itemsCollectionList[i].animes
           }
           bulkCollection.push(dataCollection)
         }
@@ -72,8 +73,6 @@ function Detail() {
   React.useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
-
-  console.log(exsitInCollection)
 
   return (
     <Container>
