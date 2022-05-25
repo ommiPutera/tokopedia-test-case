@@ -7,15 +7,19 @@ function CollectionInfo({ exsitInCollection, to }) {
   const {
     dispatch
   } = useCollection();
+  const [collectionsName] = React.useState(exsitInCollection)
 
-
-  React.useEffect(() => {
+  const load = React.useCallback(() => {
     dispatch({
       type: 'loadCollectionDetail',
-      itemsCollectionDetail: exsitInCollection?.animes,
-      collectionName: exsitInCollection?.collectionName
+      itemsCollectionDetail: collectionsName?.animes,
+      collectionName: collectionsName?.collectionName
     })
-  }, [dispatch])
+  }, [dispatch, collectionsName])
+
+  React.useEffect(() => {
+    load()
+  }, [load])
 
   return (
     <>

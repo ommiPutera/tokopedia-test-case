@@ -16,7 +16,7 @@ function Detail() {
   const [items, setItems] = React.useState([])
   const [loading, setLoading] = React.useState(false)
   const [indexAnime, setIndexAnime] = React.useState(false)
-  const [collectionLength, setCollectionLength] = React.useState([])
+  const [collectionLength, setCollectionLength] = React.useState(null)
   const [itemsDetail, setItemsDetail] = React.useState([])
   const [agreeToRemove, setAgreeToRemove] = React.useState(false)
   const [showPopUpConfirmation, setShowPopUpConfirmation] = React.useState(false)
@@ -32,7 +32,6 @@ function Detail() {
   const removeAnime = () => {
     const arrList = [...data.itemsCollectionList]
     arrList[collectionLength].animes.splice(indexAnime, 1)
-    console.log(collectionLength, indexAnime)
     dispatch({ type: 'removeAnime', itemsCollectionList: [...arrList], itemsCollectionDetail: [...itemsDetail] })
     setShowPopUpConfirmation(false)
     openSnackbar('Anime has been deleted successfully.')
@@ -63,7 +62,6 @@ function Detail() {
     const getItemsCollectionDetail = data?.itemsCollectionList.filter(item => item.id === idCollection)[0].animes
     if (!data?.itemsCollectionDetail) {
       setLoading(true)
-      console.log('here')
       dispatch({ type: 'loadCollectionDetail', itemsCollectionDetail: getItemsCollectionDetail })
     }
     if (data?.itemsCollectionDetail) setLoading(false)
@@ -103,9 +101,6 @@ function Detail() {
             ?
             <LoadingIcon />
             : null
-
-
-
       }
 
       <PopUpRemoveCollection
